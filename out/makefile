@@ -71,6 +71,7 @@ export OS_EE_BASE_DIR
 ############################################################################
 OS_EE_APP_CFG_SRCS += ee_applcfg.c
 OS_EE_APP_CFG_SRCS += code.cpp
+OS_EE_APP_CFG_SRCS += Calc_Rel_Speed/Calc_Relative_Speed.c
 
 
 export OS_EE_APP_CFG_SRCS

@@ -1,60 +1,60 @@
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\code.cpp"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\code.cpp"
-# 52 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\code.cpp"
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h" 1
-# 57 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h"
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_cfg.h" 1
-# 58 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_cfg.h"
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\out/ee_applcfg.h" 1
-# 28 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\out/ee_applcfg.h"
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oscfg.h" 1
-# 29 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\out/ee_applcfg.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp"
+# 52 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h" 1
+# 57 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_cfg.h" 1
+# 58 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_cfg.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\out/ee_applcfg.h" 1
+# 28 "C:\\Project\\MASTER~1\\ADAS_F~1\\out/ee_applcfg.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oscfg.h" 1
+# 29 "C:\\Project\\MASTER~1\\ADAS_F~1\\out/ee_applcfg.h" 2
 
 
 extern "C" {
-# 108 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\out/ee_applcfg.h"
+# 108 "C:\\Project\\MASTER~1\\ADAS_F~1\\out/ee_applcfg.h"
 }
-# 59 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_cfg.h" 2
-# 58 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h" 2
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_arch_override.h" 1
-# 59 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h" 2
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_utils.h" 1
-# 62 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_utils.h"
+# 59 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_cfg.h" 2
+# 58 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_arch_override.h" 1
+# 59 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_utils.h" 1
+# 62 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_utils.h"
 extern "C" {
-# 296 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_utils.h"
+# 296 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_utils.h"
 }
-# 60 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h" 2
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler.h" 1
-# 59 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler.h"
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler_cfg.h" 1
-# 58 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler_cfg.h"
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler_gcc.h" 1
-# 63 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler_gcc.h"
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_arch_compiler_gcc.h" 1
-# 64 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler_gcc.h" 2
+# 60 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler.h" 1
+# 59 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler_cfg.h" 1
+# 58 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler_cfg.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler_gcc.h" 1
+# 63 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler_gcc.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_arch_compiler_gcc.h" 1
+# 64 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler_gcc.h" 2
 
 
 extern "C" {
-# 123 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler_gcc.h"
+# 123 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler_gcc.h"
 }
-# 59 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler_cfg.h" 2
-# 70 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler_cfg.h"
+# 59 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler_cfg.h" 2
+# 70 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler_cfg.h"
 extern "C" {
-# 157 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler_cfg.h"
+# 157 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler_cfg.h"
 }
-# 60 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler.h" 2
+# 60 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler.h" 2
 
 
 extern "C" {
-# 255 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_compiler.h"
+# 255 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_compiler.h"
 }
-# 61 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h" 2
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_platform_types.h" 1
-# 64 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_platform_types.h"
+# 61 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_platform_types.h" 1
+# 64 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_platform_types.h"
 # 1 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\4.9.2\\include-fixed\\limits.h" 1 3 4
-# 65 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_platform_types.h" 2
+# 65 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_platform_types.h" 2
 # 1 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\4.9.2\\include\\stddef.h" 1 3 4
 # 147 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\4.9.2\\include\\stddef.h" 3 4
 typedef int ptrdiff_t;
@@ -72,7 +72,7 @@ typedef struct {
 
 
   typedef decltype(nullptr) nullptr_t;
-# 66 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_platform_types.h" 2
+# 66 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_platform_types.h" 2
 # 1 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\4.9.2\\include\\stdint.h" 1 3 4
 # 9 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\4.9.2\\include\\stdint.h" 3 4
 # 1 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\avr\\include\\stdint.h" 1 3 4
@@ -185,14 +185,14 @@ typedef int64_t intmax_t;
 
 typedef uint64_t uintmax_t;
 # 10 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\4.9.2\\include\\stdint.h" 2 3 4
-# 67 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_platform_types.h" 2
+# 67 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_platform_types.h" 2
 
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_avr8_compiler.h" 1
-# 68 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_avr8_compiler.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_avr8_compiler.h" 1
+# 68 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_avr8_compiler.h"
 extern "C" {
-# 95 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_avr8_compiler.h"
+# 95 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_avr8_compiler.h"
 }
-# 69 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_platform_types.h" 2
+# 69 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_platform_types.h" 2
 
 
 # 1 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\avr\\include\\avr\\interrupt.h" 1 3
@@ -242,7 +242,7 @@ typedef struct
 # 1 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\avr\\include\\avr\\lock.h" 1 3
 # 642 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\avr\\include\\avr\\io.h" 2 3
 # 39 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\avr\\include\\avr\\interrupt.h" 2 3
-# 72 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_platform_types.h" 2
+# 72 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_platform_types.h" 2
 
 
 
@@ -293,18 +293,18 @@ typedef void (* OsEE_void_cb) (void);
 
 
 }
-# 62 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h" 2
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_hal.h" 1
-# 65 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_hal.h"
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_atmega_timer1ctc.h" 1
-# 99 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_atmega_timer1ctc.h"
+# 62 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_hal.h" 1
+# 65 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_hal.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_atmega_timer1ctc.h" 1
+# 99 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_atmega_timer1ctc.h"
 extern "C" {
-# 122 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_atmega_timer1ctc.h"
+# 122 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_atmega_timer1ctc.h"
 void OsEE_atmega_startTimer1(uint32_t microsecondsInterval);
 
 
 }
-# 66 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_hal.h" 2
+# 66 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_hal.h" 2
 
 
 
@@ -313,7 +313,7 @@ void OsEE_atmega_startTimer1(uint32_t microsecondsInterval);
 
 
 extern "C" {
-# 102 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_hal.h"
+# 102 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_hal.h"
 static inline OsEE_addr osEE_get_SP ( void )
 {
   return (OsEE_addr)(*(volatile uint16_t *)(((((uint16_t) &((*(volatile uint16_t *)((0x3D) + 0x20)))) - 0x20)) + 0x20));
@@ -325,17 +325,17 @@ static inline OsEE_core_id osEE_get_curr_core_id ( void ) {
 
 
 }
-# 63 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h" 2
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api.h" 1
-# 59 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api.h"
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h" 1
-# 82 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 63 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api.h" 1
+# 59 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h" 1
+# 82 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 extern "C" {
-# 96 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 96 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef uint8_t AppModeType;
-# 120 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 120 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef OsEE_reg TaskType;
-# 129 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 129 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef OsEE_reg ISRType;
 
 
@@ -343,21 +343,21 @@ typedef OsEE_reg ISRType;
 
 
 typedef TaskType * TaskRefType;
-# 200 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 200 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef uint8_t TaskPrio;
-# 231 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 231 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef OsEE_isr_src_id ISRSource;
-# 244 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 244 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef uint8_t TaskActivation;
-# 259 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 259 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef OsEE_core_id CoreIdType;
-# 282 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 282 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef uint8_t CoreNumType;
-# 298 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 298 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef OsEE_reg CoreMaskType;
-# 314 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 314 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef void (* TaskFunc) ( void );
-# 325 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 325 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef enum {
 
 
@@ -400,11 +400,11 @@ typedef enum {
 
   OSEE_TASK_CHAINED
 } OsEE_task_status;
-# 382 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 382 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef OsEE_task_status TaskStateType;
 
 typedef TaskStateType * TaskStateRefType;
-# 567 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 567 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef OsEE_event_mask EventMaskType;
 
 
@@ -414,11 +414,11 @@ typedef OsEE_event_mask EventMaskType;
 
 
 typedef EventMaskType * EventMaskRefType;
-# 663 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 663 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef OsEE_object_id_type ObjectIDType;
-# 675 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 675 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef OsEE_mem_size MemSize;
-# 689 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 689 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef enum {
   E_OK,
   E_OS_ACCESS,
@@ -460,12 +460,12 @@ typedef enum {
 
 
 typedef OsEE_status_type StatusType;
-# 742 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 742 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef union {
   ObjectIDType num_param;
   OsEE_addr p_param;
 } OsEE_api_param;
-# 756 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 756 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 typedef enum {
   OSServiceId_ActivateTask = (0),
   OSServiceId_TerminateTask = (2),
@@ -488,7 +488,7 @@ typedef enum {
   OSServiceId_ClearEvent = (30),
   OSServiceId_GetEvent = (32),
   OSServiceId_WaitEvent = (34),
-# 804 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 804 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
   OSServiceId_GetActiveApplicationMode = (70),
   OSServiceId_ShutdownOS = (72),
   OSServiceId_StartOS = (74),
@@ -511,145 +511,145 @@ typedef enum {
 
 
 typedef OsEE_service_id_type OSServiceIdType;
-# 900 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api_types.h"
+# 900 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api_types.h"
 }
-# 60 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api.h" 2
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h" 1
-# 60 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 60 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h" 1
+# 60 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 extern "C" {
-# 112 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 112 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 void
   DisableAllInterrupts
 (
   void
 );
-# 137 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 137 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 void
   EnableAllInterrupts
 (
   void
 );
-# 168 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 168 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 void
   SuspendAllInterrupts
 (
   void
 );
-# 196 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 196 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 void
   ResumeAllInterrupts
 (
   void
 );
-# 226 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 226 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 void
   SuspendOSInterrupts
 (
   void
 );
-# 253 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 253 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 void
   ResumeOSInterrupts
 (
   void
 );
-# 288 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 288 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   StartOS
 (
   AppModeType Mode
 );
-# 319 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 319 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   ShutdownOS
 (
   StatusType Error
 );
-# 339 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 339 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 AppModeType
   GetActiveApplicationMode
 (
   void
 );
-# 375 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 375 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   ActivateTask
 (
   TaskType TaskID
 );
-# 419 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 419 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   ChainTask
 (
   TaskType TaskID
 );
-# 456 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 456 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   TerminateTask
 (
   void
 );
-# 477 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 477 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   GetTaskID
 (
   TaskRefType TaskID
 );
-# 504 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 504 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   GetTaskState
 (
   TaskType TaskID,
   TaskStateRefType State
 );
-# 538 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 538 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   Schedule
 (
   void
 );
-# 818 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 818 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   WaitEvent
 (
   EventMaskType Mask
 );
-# 850 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 850 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   SetEvent
 (
   TaskType TaskID,
   EventMaskType Mask
 );
-# 881 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 881 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   GetEvent
 (
   TaskType TaskID,
   EventMaskRefType Event
 );
-# 908 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 908 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 StatusType
   ClearEvent
 (
   EventMaskType Mask
 );
-# 960 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 960 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 void
   StartupHook(void);
-# 1352 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 1352 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
  ISRType
   GetISRID
 (
   void
 );
-# 1966 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_osek.h"
+# 1966 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_osek.h"
 }
-# 61 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api.h" 2
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_dynamic.h" 1
-# 62 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api.h" 2
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_extension.h" 1
-# 61 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_extension.h"
+# 61 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_dynamic.h" 1
+# 62 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_extension.h" 1
+# 61 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_extension.h"
 extern "C" {
 
 
@@ -661,15 +661,15 @@ struct OsEE_sem_tag;
 
 
 typedef struct OsEE_sem_tag * SemRefType;
-# 81 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_extension.h"
+# 81 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_extension.h"
 typedef OsEE_reg CountType;
-# 126 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_extension.h"
+# 126 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_extension.h"
 StatusType
   WaitSem
 (
   SemRefType Sem
 );
-# 149 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_oo_api_extension.h"
+# 149 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_oo_api_extension.h"
 StatusType
   PostSem
 (
@@ -678,22 +678,22 @@ StatusType
 
 
 }
-# 63 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api.h" 2
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_scheduler_types.h" 1
-# 61 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_scheduler_types.h"
+# 63 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api.h" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_scheduler_types.h" 1
+# 61 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_scheduler_types.h"
 extern "C" {
 
 
 
 struct OsEE_TDB_tag;
-# 75 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_scheduler_types.h"
+# 75 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_scheduler_types.h"
 typedef struct OsEE_SN_tag {
 
   struct OsEE_SN_tag * p_next;
 
   struct OsEE_TDB_tag const * p_tdb;
 } OsEE_SN;
-# 92 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_scheduler_types.h"
+# 92 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_scheduler_types.h"
 static inline OsEE_SN *
   osEE_sn_alloc
 (
@@ -708,7 +708,7 @@ static inline OsEE_SN *
 
   return p_sn_allocated;
 }
-# 117 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_scheduler_types.h"
+# 117 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_scheduler_types.h"
 static inline void
   osEE_sn_release
 (
@@ -719,7 +719,7 @@ static inline void
   p_to_free->p_next = (*pp_first);
   (*pp_first) = p_to_free;
 }
-# 145 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_scheduler_types.h"
+# 145 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_scheduler_types.h"
 OsEE_bool
   osEE_sn_priority_insert
 (
@@ -727,7 +727,7 @@ OsEE_bool
   OsEE_SN * p_sn_new,
   OsEE_bool const as_ready
 );
-# 213 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_scheduler_types.h"
+# 213 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_scheduler_types.h"
 typedef OsEE_SN * OsEE_RQ;
 
 
@@ -751,22 +751,22 @@ typedef struct OsEE_sem_tag SemType;
 
 
 }
-# 64 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_api.h" 2
-# 64 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h" 2
+# 64 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_api.h" 2
+# 64 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h" 2
 
 
 
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_avr8_irq.h" 1
-# 60 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_avr8_irq.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_avr8_irq.h" 1
+# 60 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_avr8_irq.h"
 extern "C" {
-# 300 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee_avr8_irq.h"
+# 300 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee_avr8_irq.h"
 }
-# 68 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h" 2
+# 68 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h" 2
 
-# 1 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\out/ee_declcfg.h" 1
-# 24 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\out/ee_declcfg.h"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\out/ee_declcfg.h" 1
+# 24 "C:\\Project\\MASTER~1\\ADAS_F~1\\out/ee_declcfg.h"
 extern "C" {
-# 35 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\out/ee_declcfg.h"
+# 35 "C:\\Project\\MASTER~1\\ADAS_F~1\\out/ee_declcfg.h"
 extern void FuncTask1 ( void );
 extern void FuncTask2 ( void );
 extern void FuncTask3 ( void );
@@ -783,13 +783,13 @@ void __attribute__((used)) clock_handler ( void );
 
 
 extern void idle_hook (void);
-# 65 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\out/ee_declcfg.h"
+# 65 "C:\\Project\\MASTER~1\\ADAS_F~1\\out/ee_declcfg.h"
 extern SemType V;
 
 
 }
-# 70 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\erika\\inc/ee.h" 2
-# 53 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\code.cpp" 2
+# 70 "C:\\Project\\MASTER~1\\ADAS_F~1\\erika\\inc/ee.h" 2
+# 53 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp" 2
 
 
 # 1 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h" 1
@@ -2688,7 +2688,8 @@ static const uint8_t A5 = (19);
 static const uint8_t A6 = (20);
 static const uint8_t A7 = (21);
 # 258 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h" 2
-# 56 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\code.cpp" 2
+# 56 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp" 2
+
 
 
 
@@ -2717,6 +2718,14 @@ void clock_handler ( void );
 
 extern void idle_hook ( void );
 
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.h" 1
+# 14 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.h"
+extern void Calc_Relative_Speed(float Relative_Distance);
+
+
+extern float Relative_Speed;
+# 86 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp" 2
+
 
 OsEE_reg volatile task1_fired;
 OsEE_reg volatile task2_fired;
@@ -2736,7 +2745,7 @@ OsEE_addr volatile task3_sp;
 OsEE_addr volatile task4_sp;
 OsEE_addr volatile task5_sp;
 OsEE_addr volatile main_sp;
-# 113 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\code.cpp"
+# 116 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp"
 extern SemType V;
 
 
@@ -2765,7 +2774,7 @@ void print_sp(TaskType tid, OsEE_addr sp) {
   __asm__ __volatile__ ("sei" ::: "memory");
   serial_print(msg);
 }
-# 152 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\code.cpp"
+# 155 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp"
 void __attribute__((used)) clock_handler ( void ) {
   if (!isr2_armed) {
     led_val = (led_val == 0x0)? 0x1: 0x0;
@@ -2791,7 +2800,7 @@ void idle_hook ( void ) {
   if ( main_sp == 0 ) {
     main_sp = curr_sp;
   } else if ( main_sp != curr_sp ) {
-    do { digitalWrite(led, 0x1); __asm__ __volatile__ ("cli" ::: "memory"); serial_print("Test Failed!!!, line:" "177" " \r\n"); while ( 1 ) { if (serialEventRun) serialEventRun(); } } while ( 0 );
+    do { digitalWrite(led, 0x1); __asm__ __volatile__ ("cli" ::: "memory"); serial_print("Test Failed!!!, line:" "180" " \r\n"); while ( 1 ) { if (serialEventRun) serialEventRun(); } } while ( 0 );
   }
 
   __asm__ __volatile__ ("cli" ::: "memory");
@@ -2808,7 +2817,7 @@ int main(void)
   init();
 
   setup();
-# 221 "C:\\Evidence\\WORKSP~1\\FULL_P~1\\code.cpp"
+# 224 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp"
   StartOS(((AppModeType)0U));
 
   return 0;
@@ -2817,37 +2826,33 @@ int main(void)
 
 
 
+
+
 void FuncTask1 ( void )
 {
-  OsEE_addr curr_sp;
 
-  serial_print("TASK1\r\n");
+
+
+
+
+
+
+  static double Relative_Distance = 300.f;
+  static uint8_t counter = 1;
 
   task1_fired++;
+Calc_Relative_Speed(Relative_Distance);
 
-  isr2_armed = 1U;
 
-  curr_sp = osEE_get_SP();
-  if ( task1_sp == 0 ) {
-    task1_sp = curr_sp;
-  } else if ( task1_sp != curr_sp ) {
-    do { digitalWrite(led, 0x1); __asm__ __volatile__ ("cli" ::: "memory"); serial_print("Test Failed!!!, line:" "243" " \r\n"); while ( 1 ) { if (serialEventRun) serialEventRun(); } } while ( 0 );
-  }
+
+
+
+Relative_Distance = Relative_Distance - (counter*0.1)/3.6;
+counter++;
+
+  serial_print("\r\n Release TASK1 \r\n");
 
   ActivateTask((2U));
-
-  PostSem(&V);
-
-  while (isr2_armed) {
-    ;
-  }
-  serial_print("Release TASK1\r\n");
-
-  curr_sp = osEE_get_SP();
-  if ( task1_sp != curr_sp ) {
-    do { digitalWrite(led, 0x1); __asm__ __volatile__ ("cli" ::: "memory"); serial_print("Test Failed!!!, line:" "257" " \r\n"); while ( 1 ) { if (serialEventRun) serialEventRun(); } } while ( 0 );
-  }
-
   task1_ended++;
 }
 
@@ -2856,20 +2861,42 @@ void FuncTask1 ( void )
 
 void FuncTask2 ( void )
 {
-  OsEE_addr curr_sp;
+
+  static int result=0;
   serial_print("TASK2\r\n");
-  curr_sp = osEE_get_SP();
-  if ( task2_sp == 0 ) {
-    task2_sp = curr_sp;
-  } else if ( task2_sp != curr_sp ) {
-    do { digitalWrite(led, 0x1); __asm__ __volatile__ ("cli" ::: "memory"); serial_print("Test Failed!!!, line:" "274" " \r\n"); while ( 1 ) { if (serialEventRun) serialEventRun(); } } while ( 0 );
-  }
+
 
   task2_fired++;
 
-  WaitSem(&V);
+  result = Relative_Speed;
 
-  ActivateTask((3U));
+  char str[10];
+
+
+
+  int i, rem, len = 0, n,m;
+
+  n = result;
+  m=result;
+  while (n != 0)
+  {
+      len++;
+      n /= 10;
+  }
+
+  for (i = 0; i < len; i++)
+     {
+         rem = m % 10;
+         m = m / 10;
+         str[len - (i + 1)] = rem + '0';
+     }
+
+  str[len] = '\0';
+
+  Serial.print(str);
+  Serial.print("\r\n");
+
+
   task2_ended++;
 }
 

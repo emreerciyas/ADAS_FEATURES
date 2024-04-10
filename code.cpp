@@ -54,6 +54,7 @@
 /* Arduino SDK. */
 #include "Arduino.h"
 
+
 /*
  * Pin 13 has an LED connected on most Arduino boards.
  * give it a name:
@@ -80,6 +81,8 @@ DeclareIsr2(clock_handler);
 
 /* Idle Hook */
 extern void idle_hook ( void );
+
+#include "code.h"
 
 /* Counters */
 OsEE_reg volatile task1_fired;
@@ -226,37 +229,33 @@ int main(void)
 /*
  * TASK 1
  */
+
+
 TASK(Task1)
 {
-  OsEE_addr curr_sp;
 
-  serial_print("TASK1\r\n");
+  //serial_print("\n TASK1\r\n");
+/*    Temporary code part to test algorithms
+ *    When input signals are ready these part will be removed
+*/
 
+/********************************************************************************/
+  static double Relative_Distance = 300.f;
+  static uint8_t counter = 1;
+  /********************************************************************************/
   task1_fired++;
+Calc_Relative_Speed(Relative_Distance);
 
-  isr2_armed = 1U;
-
-  curr_sp = osEE_get_SP();
-  if ( task1_sp == 0 ) {
-    task1_sp = curr_sp;
-  } else if ( task1_sp != curr_sp ) {
-    OSEE_BREAK_POINT();
-  }
+/*    Temporary code part to test algorithms
+ *    When input signals are ready these part will be removed
+ */
+/********************************************************************************/
+Relative_Distance = Relative_Distance - (counter*0.1)/3.6;
+counter++;
+/********************************************************************************/
+  serial_print("\r\n Release TASK1 \r\n");
 
   ActivateTask(Task2);
-
-  PostSem(&V);
-
-  while (isr2_armed) {
-    ; /* Wait ISR2 release */
-  }
-  serial_print("Release TASK1\r\n");
-
-  curr_sp = osEE_get_SP();
-  if ( task1_sp != curr_sp ) {
-    OSEE_BREAK_POINT();
-  }
-
   task1_ended++;
 }
 
@@ -265,20 +264,42 @@ TASK(Task1)
  */
 TASK(Task2)
 {
-  OsEE_addr  curr_sp;
+
+  static int result=0;
   serial_print("TASK2\r\n");
-  curr_sp = osEE_get_SP();
-  if ( task2_sp == 0 ) {
-    task2_sp = curr_sp;
-  } else if ( task2_sp != curr_sp ) {
-    OSEE_BREAK_POINT();
-  }
+
 
   task2_fired++;
 
-  WaitSem(&V);
+  result = Relative_Speed;
 
-  ActivateTask(Task3);
+  char str[10];
+  //snprintf(str, sizeof(str), "%d", result);
+
+
+  int i, rem, len = 0, n,m;
+
+  n = result;
+  m=result;
+  while (n != 0)
+  {
+      len++;
+      n /= 10;
+  }
+
+  for (i = 0; i < len; i++)
+     {
+         rem = m % 10;
+         m = m / 10;
+         str[len - (i + 1)] = rem + '0';
+     }
+
+  str[len] = '\0';
+
+  Serial.print(str);
+  Serial.print("\r\n");
+
+
   task2_ended++;
 }
 
