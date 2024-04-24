@@ -226,6 +226,8 @@ int main(void)
   return 0;
 }
 
+
+
 /*
  * TASK 1
  */
@@ -240,11 +242,12 @@ TASK(Task1)
 */
 
 /********************************************************************************/
-  static double Relative_Distance = 300.f;
-  static uint8_t counter = 1;
+
+  static uint16_t counter = 1;
   /********************************************************************************/
   task1_fired++;
 Calc_Relative_Speed(Relative_Distance);
+Acc_Dec_Dtrmn_Sys();
 
 /*    Temporary code part to test algorithms
  *    When input signals are ready these part will be removed
@@ -253,7 +256,7 @@ Calc_Relative_Speed(Relative_Distance);
 Relative_Distance = Relative_Distance - (counter*0.1)/3.6;
 counter++;
 /********************************************************************************/
-  serial_print("\r\n Release TASK1 \r\n");
+ // serial_print("\r\n Release TASK1 \r\n");
 
   ActivateTask(Task2);
   task1_ended++;
@@ -266,39 +269,47 @@ TASK(Task2)
 {
 
   static int result=0;
-  serial_print("TASK2\r\n");
+  static int result2=0;
+  //serial_print("TASK2\r\n");
 
 
   task2_fired++;
 
-  result = Relative_Speed;
+  result = (int)(Output_Acceleration *100);
 
   char str[10];
-  //snprintf(str, sizeof(str), "%d", result);
-
-
-  int i, rem, len = 0, n,m;
-
-  n = result;
-  m=result;
-  while (n != 0)
-  {
-      len++;
-      n /= 10;
-  }
-
-  for (i = 0; i < len; i++)
-     {
-         rem = m % 10;
-         m = m / 10;
-         str[len - (i + 1)] = rem + '0';
-     }
-
-  str[len] = '\0';
-
+  snprintf(str, sizeof(str), "%d", result);
   Serial.print(str);
   Serial.print("\r\n");
 
+  result2= (Status_Accel_Decel);
+
+  char str2[10];
+  snprintf(str2, sizeof(str2), "%d", result2);
+  Serial.print(str2);
+  Serial.print("\r\n");
+
+
+  int result3= (int)(Status_Dec_Inc);
+  char str3[10];
+  snprintf(str3, sizeof(str3), "%d", result3);
+  Serial.print(str3);
+  Serial.print("\r\n");
+
+
+  int result4= (int)(Relative_Distance *100);
+  char str4[10];
+  snprintf(str4, sizeof(str4), "%d", result4);
+  Serial.print(str4);
+  Serial.print("\r\n\r\n");
+  /*
+
+  int result5= (int)(TTC_HalfFullBrake*100);
+  char str5[10];
+  snprintf(str5, sizeof(str5), "%d", result5);
+  Serial.print(str5);
+  Serial.print("\r\n");
+  */
 
   task2_ended++;
 }

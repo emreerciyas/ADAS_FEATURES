@@ -21,11 +21,11 @@ Calc_Relative_Speed:
 .L__stack_usage = 4
 	movw r12,r22
 	movw r14,r24
-	lds r24,skip_first
+	lds r24,skip_first_crs
 	cpse r24,__zero_reg__
 	rjmp .L2
 	ldi r24,lo8(1)
-	sts skip_first,r24
+	sts skip_first_crs,r24
 	rjmp .L3
 .L2:
 	movw r20,r14
@@ -61,10 +61,10 @@ Calc_Relative_Speed:
 	pop r12
 	ret
 	.size	Calc_Relative_Speed, .-Calc_Relative_Speed
-	.section	.bss.skip_first,"aw",@nobits
-	.type	skip_first, @object
-	.size	skip_first, 1
-skip_first:
+	.section	.bss.skip_first_crs,"aw",@nobits
+	.type	skip_first_crs, @object
+	.size	skip_first_crs, 1
+skip_first_crs:
 	.zero	1
 .global	Relative_Speed
 	.section	.bss.Relative_Speed,"aw",@nobits

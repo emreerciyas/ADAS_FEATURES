@@ -9,12 +9,11 @@
  */
 #include "Arduino.h"
 
-#define MS_TO_KMH 3.6f
-#define TIMER_PARAM 0.1f
+#include "config.h"
 
  static float Relative_Distance_Prev = 0.f;
  float Relative_Speed = 0.f;
- static boolean skip_first = false;
+ static boolean skip_first_crs = false;
 
 /*
  * Name : Calc_Relative_Speed
@@ -29,9 +28,9 @@ void Calc_Relative_Speed(float Relative_Distance)
   /*
    * first cycle should be skip as the previous distance hasn't been taken yet
    */
-  if(skip_first == false)
+  if(skip_first_crs == false)
   {
-	  skip_first = true;
+	  skip_first_crs = true;
   }
   else
   {
