@@ -27,6 +27,8 @@ extern unsigned int ACC_Enable;
 extern unsigned int CWAS_Enable;
 extern unsigned int EBS_Enable;
 
+#define MAX_FLOAT 3.40282347e+38F
+
 extern float Vehicle_Speed;
 
 
