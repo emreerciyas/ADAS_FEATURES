@@ -1,8 +1,14 @@
-# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c"
-# 10 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c"
+
+
+
+
+
+
+
 # 1 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h" 1
 # 23 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h"
 # 1 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\avr\\include\\stdlib.h" 1 3
@@ -881,40 +887,39 @@ static const uint8_t A5 = (19);
 static const uint8_t A6 = (20);
 static const uint8_t A7 = (21);
 # 258 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h" 2
-# 11 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c" 2
+# 9 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c" 2
 
 # 1 "C:\\Project\\MASTER~1\\ADAS_F~1/config.h" 1
-# 13 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c" 2
+# 11 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1/code.h" 1
+# 14 "C:\\Project\\MASTER~1\\ADAS_F~1/code.h"
+extern void Calc_Relative_Speed(float Relative_Distance);
+extern void Acc_Dec_Dtrmn_Sys(void);
 
- static float Relative_Distance_Prev = 0.f;
- float Relative_Speed = 0.f;
- static boolean skip_first_crs = 0;
-# 25 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c"
-void Calc_Relative_Speed(float Relative_Distance)
-{
+extern float Relative_Distance;
+extern float Relative_Speed;
+extern float Speed_SetbyDriver;
 
+extern float Output_Acceleration;
+extern int Status_Accel_Decel;
+extern int Status_Dec_Inc;
 
+extern unsigned int CC_Enable;
+extern unsigned int ACC_Enable;
+extern unsigned int CWAS_Enable;
+extern unsigned int EBS_Enable;
 
-
-  if(skip_first_crs == 0)
-  {
-   skip_first_crs = 1;
-  }
-  else
-  {
-
-
-
-
-
+extern float Vehicle_Speed;
+# 12 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c" 2
 
 
-   Relative_Speed = ((Relative_Distance_Prev - Relative_Distance) / 0.1f ) *3.6f;
+unsigned int CC_Enable = 1U;
+unsigned int ACC_Enable = 0U;
+unsigned int CWAS_Enable = 0U;
+unsigned int EBS_Enable = 0U;
 
-  }
+float Vehicle_Speed = 50.f;
 
+float Relative_Distance = 50.f;
 
-
-  Relative_Distance_Prev = Relative_Distance;
-
-}
+float Speed_SetbyDriver = 70.f;

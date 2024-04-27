@@ -84,6 +84,246 @@ main:
 	ldi r25,0
 	ret
 	.size	main, .-main
+.global	__floatunsisf
+.global	__mulsf3
+.global	__divsf3
+.global	__subsf3
+	.section	.text.FuncTask1,"ax",@progbits
+.global	FuncTask1
+	.type	FuncTask1, @function
+FuncTask1:
+	push r28
+	push r29
+/* prologue: function */
+/* frame size = 0 */
+/* stack size = 2 */
+.L__stack_usage = 2
+	lds r24,task1_fired
+	subi r24,lo8(-(1))
+	sts task1_fired,r24
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+	call Calc_Relative_Speed
+	call Acc_Dec_Dtrmn_Sys
+	lds r28,_ZZ9FuncTask1E7counter
+	lds r29,_ZZ9FuncTask1E7counter+1
+	movw r22,r28
+	ldi r24,0
+	ldi r25,0
+	call __floatunsisf
+	ldi r18,lo8(-51)
+	ldi r19,lo8(-52)
+	ldi r20,lo8(-52)
+	ldi r21,lo8(61)
+	call __mulsf3
+	ldi r18,lo8(102)
+	ldi r19,lo8(102)
+	ldi r20,lo8(102)
+	ldi r21,lo8(64)
+	call __divsf3
+	movw r18,r22
+	movw r20,r24
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+	call __subsf3
+	sts Relative_Distance,r22
+	sts Relative_Distance+1,r23
+	sts Relative_Distance+2,r24
+	sts Relative_Distance+3,r25
+	adiw r28,1
+	sts _ZZ9FuncTask1E7counter+1,r29
+	sts _ZZ9FuncTask1E7counter,r28
+	ldi r24,lo8(2)
+	call ActivateTask
+	lds r24,task1_ended
+	subi r24,lo8(-(1))
+	sts task1_ended,r24
+/* epilogue start */
+	pop r29
+	pop r28
+	ret
+	.size	FuncTask1, .-FuncTask1
+.global	__fixsfsi
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"%d"
+.LC1:
+	.string	"\r\n"
+.LC2:
+	.string	"\r\n\r\n"
+	.section	.text.FuncTask2,"ax",@progbits
+.global	FuncTask2
+	.type	FuncTask2, @function
+FuncTask2:
+	push r12
+	push r13
+	push r15
+	push r16
+	push r17
+	push r28
+	push r29
+	in r28,__SP_L__
+	in r29,__SP_H__
+	sbiw r28,40
+	in __tmp_reg__,__SREG__
+	cli
+	out __SP_H__,r29
+	out __SREG__,__tmp_reg__
+	out __SP_L__,r28
+/* prologue: function */
+/* frame size = 40 */
+/* stack size = 47 */
+.L__stack_usage = 47
+	lds r24,task2_fired
+	subi r24,lo8(-(1))
+	sts task2_fired,r24
+	ldi r18,0
+	ldi r19,0
+	ldi r20,lo8(-56)
+	ldi r21,lo8(66)
+	lds r22,Output_Acceleration
+	lds r23,Output_Acceleration+1
+	lds r24,Output_Acceleration+2
+	lds r25,Output_Acceleration+3
+	call __mulsf3
+	call __fixsfsi
+	sts _ZZ9FuncTask2E6result,r22
+	sts _ZZ9FuncTask2E6result+1,r23
+	push r23
+	push r22
+	ldi r16,lo8(.LC0)
+	ldi r17,hi8(.LC0)
+	push r17
+	push r16
+	push __zero_reg__
+	ldi r24,lo8(10)
+	mov r15,r24
+	push r15
+	movw r12,r28
+	ldi r24,31
+	add r12,r24
+	adc r13,__zero_reg__
+	push r13
+	push r12
+	call snprintf
+	movw r22,r12
+	ldi r24,lo8(Serial)
+	ldi r25,hi8(Serial)
+	call _ZN5Print5printEPKc
+	ldi r22,lo8(.LC1)
+	ldi r23,hi8(.LC1)
+	ldi r24,lo8(Serial)
+	ldi r25,hi8(Serial)
+	call _ZN5Print5printEPKc
+	lds r24,Status_Accel_Decel
+	lds r25,Status_Accel_Decel+1
+	sts _ZZ9FuncTask2E7result2,r24
+	sts _ZZ9FuncTask2E7result2+1,r25
+	push r25
+	push r24
+	push r17
+	push r16
+	push __zero_reg__
+	push r15
+	movw r12,r28
+	ldi r25,21
+	add r12,r25
+	adc r13,__zero_reg__
+	push r13
+	push r12
+	call snprintf
+	movw r22,r12
+	ldi r24,lo8(Serial)
+	ldi r25,hi8(Serial)
+	call _ZN5Print5printEPKc
+	ldi r22,lo8(.LC1)
+	ldi r23,hi8(.LC1)
+	ldi r24,lo8(Serial)
+	ldi r25,hi8(Serial)
+	call _ZN5Print5printEPKc
+	lds r24,Status_Dec_Inc+1
+	push r24
+	lds r24,Status_Dec_Inc
+	push r24
+	push r17
+	push r16
+	push __zero_reg__
+	push r15
+	movw r12,r28
+	ldi r24,11
+	add r12,r24
+	adc r13,__zero_reg__
+	push r13
+	push r12
+	call snprintf
+	movw r22,r12
+	ldi r24,lo8(Serial)
+	ldi r25,hi8(Serial)
+	call _ZN5Print5printEPKc
+	ldi r22,lo8(.LC1)
+	ldi r23,hi8(.LC1)
+	ldi r24,lo8(Serial)
+	ldi r25,hi8(Serial)
+	call _ZN5Print5printEPKc
+	ldi r18,0
+	ldi r19,0
+	ldi r20,lo8(-56)
+	ldi r21,lo8(66)
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+	call __mulsf3
+	call __fixsfsi
+	push r23
+	push r22
+	push r17
+	push r16
+	push __zero_reg__
+	push r15
+	movw r16,r28
+	subi r16,-1
+	sbci r17,-1
+	push r17
+	push r16
+	call snprintf
+	in __tmp_reg__,__SREG__
+	cli
+	out __SP_H__,r29
+	out __SREG__,__tmp_reg__
+	out __SP_L__,r28
+	movw r22,r16
+	ldi r24,lo8(Serial)
+	ldi r25,hi8(Serial)
+	call _ZN5Print5printEPKc
+	ldi r22,lo8(.LC2)
+	ldi r23,hi8(.LC2)
+	ldi r24,lo8(Serial)
+	ldi r25,hi8(Serial)
+	call _ZN5Print5printEPKc
+	lds r24,task2_ended
+	subi r24,lo8(-(1))
+	sts task2_ended,r24
+/* epilogue start */
+	adiw r28,40
+	in __tmp_reg__,__SREG__
+	cli
+	out __SP_H__,r29
+	out __SREG__,__tmp_reg__
+	out __SP_L__,r28
+	pop r29
+	pop r28
+	pop r17
+	pop r16
+	pop r15
+	pop r13
+	pop r12
+	ret
+	.size	FuncTask2, .-FuncTask2
 	.section	.text._Z12serial_printPKc,"ax",@progbits
 .global	_Z12serial_printPKc
 	.type	_Z12serial_printPKc, @function
@@ -113,9 +353,9 @@ _Z12serial_printPKc:
 	ldi r24,lo8(gs(_Z14serialEventRunv))
 	ldi r25,hi8(gs(_Z14serialEventRunv))
 	or r24,r25
-	breq .L12
+	breq .L14
 	call _Z14serialEventRunv
-.L12:
+.L14:
 /* #APP */
  ;  134 "C:\Project\MASTER~1\ADAS_F~1\code.cpp" 1
 	sei
@@ -123,8 +363,8 @@ _Z12serial_printPKc:
 /* #NOAPP */
 	ret
 	.size	_Z12serial_printPKc, .-_Z12serial_printPKc
-	.section	.rodata.str1.1,"aMS",@progbits,1
-.LC0:
+	.section	.rodata.str1.1
+.LC3:
 	.string	"TASK %d SP<%p>\r\n"
 	.section	.text._Z8print_sphPv,"ax",@progbits
 .global	_Z8print_sphPv
@@ -143,8 +383,8 @@ _Z8print_sphPv:
 	push r22
 	push __zero_reg__
 	push r24
-	ldi r24,lo8(.LC0)
-	ldi r25,hi8(.LC0)
+	ldi r24,lo8(.LC3)
+	ldi r25,hi8(.LC3)
 	push r25
 	push r24
 	ldi r24,lo8(_ZZ8print_sphPvE3msg)
@@ -170,7 +410,7 @@ _Z8print_sphPv:
 	jmp _Z12serial_printPKc
 	.size	_Z8print_sphPv, .-_Z8print_sphPv
 	.section	.rodata.str1.1
-.LC1:
+.LC4:
 	.string	"Test Failed!!!, line:180 \r\n"
 	.section	.text.idle_hook,"ax",@progbits
 .global	idle_hook
@@ -194,20 +434,20 @@ idle_hook:
 	lds r24,main_sp
 	lds r25,main_sp+1
 	or r24,r25
-	brne .L18
+	brne .L20
 	ldd r24,Y+1
 	ldd r25,Y+2
 	sts main_sp+1,r25
 	sts main_sp,r24
-	rjmp .L19
-.L18:
+	rjmp .L21
+.L20:
 	lds r18,main_sp
 	lds r19,main_sp+1
 	ldd r24,Y+1
 	ldd r25,Y+2
 	cp r18,r24
 	cpc r19,r25
-	breq .L19
+	breq .L21
 	ldi r22,lo8(1)
 	lds r24,led
 	call digitalWrite
@@ -216,18 +456,18 @@ idle_hook:
 	cli
  ;  0 "" 2
 /* #NOAPP */
-	ldi r24,lo8(.LC1)
-	ldi r25,hi8(.LC1)
+	ldi r24,lo8(.LC4)
+	ldi r25,hi8(.LC4)
 	call _Z12serial_printPKc
 	ldi r16,lo8(gs(_Z14serialEventRunv))
 	ldi r17,hi8(gs(_Z14serialEventRunv))
-.L20:
+.L22:
 	cp r16,__zero_reg__
 	cpc r17,__zero_reg__
-	breq .L20
+	breq .L22
 	call _Z14serialEventRunv
-	rjmp .L20
-.L19:
+	rjmp .L22
+.L21:
 /* #APP */
  ;  183 "C:\Project\MASTER~1\ADAS_F~1\code.cpp" 1
 	cli
@@ -236,9 +476,9 @@ idle_hook:
 	ldi r24,lo8(gs(_Z14serialEventRunv))
 	ldi r25,hi8(gs(_Z14serialEventRunv))
 	or r24,r25
-	breq .L22
+	breq .L24
 	call _Z14serialEventRunv
-.L22:
+.L24:
 /* #APP */
  ;  187 "C:\Project\MASTER~1\ADAS_F~1\code.cpp" 1
 	sei
@@ -253,185 +493,6 @@ idle_hook:
 	pop r16
 	ret
 	.size	idle_hook, .-idle_hook
-.global	__floatsisf
-.global	__mulsf3
-.global	__divsf3
-.global	__subsf3
-	.section	.rodata.str1.1
-.LC2:
-	.string	"\r\n Release TASK1 \r\n"
-	.section	.text.FuncTask1,"ax",@progbits
-.global	FuncTask1
-	.type	FuncTask1, @function
-FuncTask1:
-	push r28
-/* prologue: function */
-/* frame size = 0 */
-/* stack size = 1 */
-.L__stack_usage = 1
-	lds r24,task1_fired
-	subi r24,lo8(-(1))
-	sts task1_fired,r24
-	lds r22,_ZZ9FuncTask1E17Relative_Distance
-	lds r23,_ZZ9FuncTask1E17Relative_Distance+1
-	lds r24,_ZZ9FuncTask1E17Relative_Distance+2
-	lds r25,_ZZ9FuncTask1E17Relative_Distance+3
-	call Calc_Relative_Speed
-	lds r28,_ZZ9FuncTask1E7counter
-	mov r22,r28
-	ldi r23,0
-	ldi r24,0
-	ldi r25,0
-	call __floatsisf
-	ldi r18,lo8(-51)
-	ldi r19,lo8(-52)
-	ldi r20,lo8(-52)
-	ldi r21,lo8(61)
-	call __mulsf3
-	ldi r18,lo8(102)
-	ldi r19,lo8(102)
-	ldi r20,lo8(102)
-	ldi r21,lo8(64)
-	call __divsf3
-	movw r18,r22
-	movw r20,r24
-	lds r22,_ZZ9FuncTask1E17Relative_Distance
-	lds r23,_ZZ9FuncTask1E17Relative_Distance+1
-	lds r24,_ZZ9FuncTask1E17Relative_Distance+2
-	lds r25,_ZZ9FuncTask1E17Relative_Distance+3
-	call __subsf3
-	sts _ZZ9FuncTask1E17Relative_Distance,r22
-	sts _ZZ9FuncTask1E17Relative_Distance+1,r23
-	sts _ZZ9FuncTask1E17Relative_Distance+2,r24
-	sts _ZZ9FuncTask1E17Relative_Distance+3,r25
-	subi r28,lo8(-(1))
-	sts _ZZ9FuncTask1E7counter,r28
-	ldi r24,lo8(.LC2)
-	ldi r25,hi8(.LC2)
-	call _Z12serial_printPKc
-	ldi r24,lo8(2)
-	call ActivateTask
-	lds r24,task1_ended
-	subi r24,lo8(-(1))
-	sts task1_ended,r24
-/* epilogue start */
-	pop r28
-	ret
-	.size	FuncTask1, .-FuncTask1
-	.section	.rodata.str1.1
-.LC3:
-	.string	"TASK2\r\n"
-.global	__fixsfsi
-.LC4:
-	.string	"\r\n"
-	.section	.text.FuncTask2,"ax",@progbits
-.global	FuncTask2
-	.type	FuncTask2, @function
-FuncTask2:
-	push r12
-	push r13
-	push r14
-	push r15
-	push r16
-	push r17
-	push r28
-	push r29
-	in r28,__SP_L__
-	in r29,__SP_H__
-	sbiw r28,10
-	in __tmp_reg__,__SREG__
-	cli
-	out __SP_H__,r29
-	out __SREG__,__tmp_reg__
-	out __SP_L__,r28
-/* prologue: function */
-/* frame size = 10 */
-/* stack size = 18 */
-.L__stack_usage = 18
-	ldi r24,lo8(.LC3)
-	ldi r25,hi8(.LC3)
-	call _Z12serial_printPKc
-	lds r24,task2_fired
-	subi r24,lo8(-(1))
-	sts task2_fired,r24
-	lds r22,Relative_Speed
-	lds r23,Relative_Speed+1
-	lds r24,Relative_Speed+2
-	lds r25,Relative_Speed+3
-	call __fixsfsi
-	movw r16,r22
-	sts _ZZ9FuncTask2E6result+1,r23
-	sts _ZZ9FuncTask2E6result,r22
-	ldi r18,0
-	ldi r19,0
-	ldi r30,lo8(10)
-	ldi r31,0
-.L30:
-	cp r22,__zero_reg__
-	cpc r23,__zero_reg__
-	breq .L34
-	subi r18,-1
-	sbci r19,-1
-	movw r24,r22
-	movw r22,r30
-	call __divmodhi4
-	rjmp .L30
-.L34:
-	movw r24,r28
-	adiw r24,1
-	movw r14,r24
-	movw r30,r24
-	add r30,r18
-	adc r31,r19
-	ldi r24,lo8(10)
-	mov r12,r24
-	mov r13,__zero_reg__
-.L32:
-	cp r30,r14
-	cpc r31,r15
-	breq .L35
-	movw r24,r16
-	movw r22,r12
-	call __divmodhi4
-	movw r16,r22
-	ldi r25,lo8(48)
-	add r25,r24
-	st -Z,r25
-	rjmp .L32
-.L35:
-	movw r26,r30
-	add r26,r18
-	adc r27,r19
-	st X,__zero_reg__
-	movw r22,r30
-	ldi r24,lo8(Serial)
-	ldi r25,hi8(Serial)
-	call _ZN5Print5printEPKc
-	ldi r22,lo8(.LC4)
-	ldi r23,hi8(.LC4)
-	ldi r24,lo8(Serial)
-	ldi r25,hi8(Serial)
-	call _ZN5Print5printEPKc
-	lds r24,task2_ended
-	subi r24,lo8(-(1))
-	sts task2_ended,r24
-/* epilogue start */
-	adiw r28,10
-	in __tmp_reg__,__SREG__
-	cli
-	out __SP_H__,r29
-	out __SREG__,__tmp_reg__
-	out __SP_L__,r28
-	pop r29
-	pop r28
-	pop r17
-	pop r16
-	pop r15
-	pop r14
-	pop r13
-	pop r12
-	ret
-	.size	FuncTask2, .-FuncTask2
 	.section	.rodata.str1.1
 .LC5:
 	.string	"TASK3\r\n"
@@ -495,6 +556,11 @@ FuncTask5:
 	sts task5_fired,r24
 	ret
 	.size	FuncTask5, .-FuncTask5
+	.section	.bss._ZZ9FuncTask2E7result2,"aw",@nobits
+	.type	_ZZ9FuncTask2E7result2, @object
+	.size	_ZZ9FuncTask2E7result2, 2
+_ZZ9FuncTask2E7result2:
+	.zero	2
 	.section	.bss._ZZ9FuncTask2E6result,"aw",@nobits
 	.type	_ZZ9FuncTask2E6result, @object
 	.size	_ZZ9FuncTask2E6result, 2
@@ -502,17 +568,9 @@ _ZZ9FuncTask2E6result:
 	.zero	2
 	.section	.data._ZZ9FuncTask1E7counter,"aw",@progbits
 	.type	_ZZ9FuncTask1E7counter, @object
-	.size	_ZZ9FuncTask1E7counter, 1
+	.size	_ZZ9FuncTask1E7counter, 2
 _ZZ9FuncTask1E7counter:
-	.byte	1
-	.section	.data._ZZ9FuncTask1E17Relative_Distance,"aw",@progbits
-	.type	_ZZ9FuncTask1E17Relative_Distance, @object
-	.size	_ZZ9FuncTask1E17Relative_Distance, 4
-_ZZ9FuncTask1E17Relative_Distance:
-	.byte	0
-	.byte	0
-	.byte	-106
-	.byte	67
+	.word	1
 	.section	.data._ZZ8print_sphPvE3msg,"aw",@progbits
 	.type	_ZZ8print_sphPvE3msg, @object
 	.size	_ZZ8print_sphPvE3msg, 22

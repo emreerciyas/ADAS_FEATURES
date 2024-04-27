@@ -1,8 +1,8 @@
-# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c"
-# 10 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
+# 11 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
 # 1 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h" 1
 # 23 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h"
 # 1 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\avr\\include\\stdlib.h" 1 3
@@ -881,40 +881,384 @@ static const uint8_t A5 = (19);
 static const uint8_t A6 = (20);
 static const uint8_t A7 = (21);
 # 258 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h" 2
-# 11 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c" 2
+# 12 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c" 2
 
 # 1 "C:\\Project\\MASTER~1\\ADAS_F~1/config.h" 1
-# 13 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c" 2
+# 14 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1/code.h" 1
+# 14 "C:\\Project\\MASTER~1\\ADAS_F~1/code.h"
+extern void Calc_Relative_Speed(float Relative_Distance);
+extern void Acc_Dec_Dtrmn_Sys(void);
 
- static float Relative_Distance_Prev = 0.f;
- float Relative_Speed = 0.f;
- static boolean skip_first_crs = 0;
-# 25 "C:\\Project\\MASTER~1\\ADAS_F~1\\Calc_Rel_Speed\\Calc_Relative_Speed.c"
-void Calc_Relative_Speed(float Relative_Distance)
+extern float Relative_Distance;
+extern float Relative_Speed;
+extern float Speed_SetbyDriver;
+
+extern float Output_Acceleration;
+extern int Status_Accel_Decel;
+extern int Status_Dec_Inc;
+
+extern unsigned int CC_Enable;
+extern unsigned int ACC_Enable;
+extern unsigned int CWAS_Enable;
+extern unsigned int EBS_Enable;
+
+extern float Vehicle_Speed;
+# 15 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c" 2
+
+
+
+
+float Safety_Distance;
+float Output_Acceleration = 0.f;
+int Status_Accel_Decel = 0;
+int Status_Dec_Inc = 2;
+
+
+static char skip_first_two_dat = 0;
+static float Vehicle_Speed_Prev;
+static float Relative_Speed_Prev;
+static float Target_Veh_Accel;
+
+
+
+
+static float Safety_Distance_Regulation;
+# 44 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
+static float TTC;
+static float TTC_HalfBrake;
+static float TTC_FullBrake;
+static float TTC_HalfFullBrake;
+static float TTC_SafetyDistMin;
+static float TTC_AccDisabled;
+static float TTC_AccMin;
+static float TTC_AccMax;
+
+static float SafetyDistance_HalfBrake;
+static float SafetyDistance_FullBrake;
+static float SafetyDistance_HalfFullBrake;
+static float SafetyDistance_AccDisabled;
+static float SafetyDistance_AccMin;
+static float SafetyDistance_AccMax;
+
+
+static void ACDS_Dtrmn_Acc_Target_Veh(void)
+{
+   if(skip_first_two_dat < 2)
+   {
+    skip_first_two_dat++;
+   }
+   else
+   {
+    Target_Veh_Accel = ((Vehicle_Speed - Vehicle_Speed_Prev) + (Relative_Speed_Prev - Relative_Speed))/0.1f;
+   }
+
+   Vehicle_Speed_Prev = Vehicle_Speed;
+   Relative_Speed_Prev = Relative_Speed;
+
+}
+
+
+static void ACDS_Dtrmn_Safety_Dist_Reg(void)
+{
+
+
+
+ Safety_Distance_Regulation = Vehicle_Speed/2;
+
+}
+# 144 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
+static void Calc_AllTTCs(void)
 {
 
 
 
 
-  if(skip_first_crs == 0)
+ float Vehicle_Speed_ms;
+
+ Vehicle_Speed_ms = Vehicle_Speed/3.6f;
+
+ TTC = Relative_Distance/(Relative_Speed/3.6f);
+
+
+ TTC_HalfBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*4.f))/(Relative_Speed/3.6f);
+
+ TTC_HalfFullBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*6.f))/(Relative_Speed/3.6f);
+
+ TTC_FullBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*8.f))/(Relative_Speed/3.6f);
+
+ TTC_AccDisabled = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*3.f))/(Relative_Speed/3.6f);
+
+ TTC_AccMin = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*2.5f))/(Relative_Speed/3.6f);
+
+ TTC_AccMax = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*2.f))/(Relative_Speed/3.6f);
+
+ TTC_SafetyDistMin = Safety_Distance/(Relative_Speed/3.6f);
+
+}
+
+
+static void Calc_AllSafeDist(void)
+{
+
+
+
+
+ float Vehicle_Speed_ms;
+
+ Vehicle_Speed_ms = Vehicle_Speed/3.6f;
+
+
+ SafetyDistance_HalfBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*4.f));
+
+ SafetyDistance_HalfFullBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*6.f));
+
+ SafetyDistance_FullBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*8.f));
+
+ SafetyDistance_AccDisabled = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*3.f));
+
+ SafetyDistance_AccMin = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*2.5f));
+
+ SafetyDistance_AccMax = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*2.f));
+
+
+
+}
+
+static void Dtrmn_AccelDecelandStatus(void)
+{
+
+
+
+
+ Output_Acceleration= 0.f;
+
+
+
+ if( ((Relative_Speed > 0.f) && (TTC <= TTC_FullBrake)) ||
+  ((Relative_Speed < 0.f) && (Relative_Distance <= SafetyDistance_FullBrake )))
+ {
+
+  Output_Acceleration= 8.f;
+  Status_Accel_Decel = 1;
+  Status_Dec_Inc = 0;
+ }
+ else if( ((Relative_Speed > 0.f) && (TTC <= TTC_HalfFullBrake)) ||
+    ((Relative_Speed < 0.f) && (Relative_Distance <= SafetyDistance_HalfFullBrake )))
+ {
+
+  Output_Acceleration= ((Vehicle_Speed/3.6f) *( Vehicle_Speed/3.6f))/(2*Relative_Distance);
+  Status_Accel_Decel = 1;
+  Status_Dec_Inc = 0;
+ }
+ else if( ((Relative_Speed > 0.f) && (TTC <= TTC_HalfBrake)) ||
+   ((Relative_Speed < 0.f) && (Relative_Distance <= SafetyDistance_HalfBrake )))
+ {
+
+  Output_Acceleration= ((Vehicle_Speed/3.6f) *( Vehicle_Speed/3.6f))/(2*Relative_Distance);
+  Status_Accel_Decel = 2;
+  Status_Dec_Inc = 0;
+ }
+ else if( ((Relative_Speed > 0.f) && (TTC <= TTC_SafetyDistMin)) ||
+   ((Relative_Speed < 0.f) && (Relative_Distance <= Safety_Distance )))
+ {
+
+  Output_Acceleration= ((Vehicle_Speed/3.6f) *( Vehicle_Speed/3.6f))/(2*Relative_Distance);
+  Status_Accel_Decel = 3;
+  Status_Dec_Inc = 0;
+ }
+ else if( ((Relative_Speed > 0.f) && (TTC <= TTC_AccDisabled)) ||
+   ((Relative_Speed < 0.f) && (Relative_Distance <= SafetyDistance_AccDisabled )))
+ {
+
+  Output_Acceleration= 0.f;
+  Status_Accel_Decel = 0;
+  Status_Dec_Inc = 2;
+ }
+ else if( ((Relative_Speed > 0.f) && (TTC <= TTC_AccMin)) ||
+   ((Relative_Speed < 0.f) && (Relative_Distance <= SafetyDistance_AccMin )))
+ {
+
+  Output_Acceleration= ((Vehicle_Speed/3.6f) *( Vehicle_Speed/3.6f))/(2*Relative_Distance);
+  if(Output_Acceleration > 3.f)
   {
-   skip_first_crs = 1;
+   Output_Acceleration = 3.f;
+  }
+  Status_Accel_Decel = 4;
+  Status_Dec_Inc = 0;
+
+ }
+ else if( ((Relative_Speed > 0.f) && (TTC <= TTC_AccMax)) ||
+   ((Relative_Speed < 0.f) && (Relative_Distance <= SafetyDistance_AccMax )))
+ {
+  if(Relative_Speed > 0.f)
+  {
+
+   Output_Acceleration= ((Relative_Speed/3.6f) *( Relative_Speed/3.6f))/(2*(Relative_Distance - SafetyDistance_AccMin));
+   if(Output_Acceleration > 3.f)
+   {
+    Output_Acceleration = 3.f;
+   }
+   Status_Accel_Decel = 4;
+   Status_Dec_Inc = 0;
+  }
+  else if (Relative_Speed < 0.f)
+  {
+
+   Output_Acceleration= ((Relative_Speed/3.6f) *( Relative_Speed/3.6f))/(2*(Relative_Distance - SafetyDistance_AccMin));
+   if(Output_Acceleration > 3.f)
+   {
+    Output_Acceleration = 3.f;
+   }
+   Status_Accel_Decel = 4;
+   Status_Dec_Inc = 1;
   }
   else
   {
 
-
-
-
-
-
-
-   Relative_Speed = ((Relative_Distance_Prev - Relative_Distance) / 0.1f ) *3.6f;
-
+   Output_Acceleration= 0.f;
+   Status_Accel_Decel = 4;
+   Status_Dec_Inc = 2;
   }
+ }
+ else if( ((Relative_Speed > 0.f) && (TTC > TTC_AccMax)) ||
+   ((Relative_Speed < 0.f) && (Relative_Distance > SafetyDistance_AccMax )))
+ {
+
+  if(Speed_SetbyDriver > Vehicle_Speed )
+  {
+   if((Speed_SetbyDriver - Vehicle_Speed) > 3.f)
+   {
+    Output_Acceleration = 3.f;
+    Status_Accel_Decel = 5;
+    Status_Dec_Inc = 1;
+   }
+   else
+   {
+    Output_Acceleration = Speed_SetbyDriver - Vehicle_Speed;
+    Status_Accel_Decel = 5;
+    Status_Dec_Inc = 1;
+   }
+  }
+  else if(Speed_SetbyDriver < Vehicle_Speed)
+  {
+   if((Vehicle_Speed - Speed_SetbyDriver) > -3.f)
+   {
+    Output_Acceleration = -3.f;
+    Status_Accel_Decel = 5;
+    Status_Dec_Inc = 0;
+   }
+   else
+   {
+    Output_Acceleration = Vehicle_Speed - Speed_SetbyDriver;
+    Status_Accel_Decel = 5;
+    Status_Dec_Inc = 0;
+   }
+  }
+ }
+ else
+ {
+
+ }
+
+}
 
 
+void Check_Enable_of_SubFeatures(void)
+{
+    if(Status_Accel_Decel == 5)
+    {
+     if((CC_Enable == 1) || (ACC_Enable == 1))
+        {
 
-  Relative_Distance_Prev = Relative_Distance;
+        }
+        else
+        {
+      Output_Acceleration= 0.f;
+      Status_Accel_Decel = 0;
+      Status_Dec_Inc = 2;
 
+        }
+    }
+    else if(Status_Accel_Decel == 4)
+    {
+     if(ACC_Enable == 1)
+        {
+
+        }
+        else
+        {
+      Output_Acceleration= 0.f;
+      Status_Accel_Decel = 0;
+      Status_Dec_Inc = 2;
+
+        }
+    }
+    else if(Status_Accel_Decel == 3)
+    {
+     if(CWAS_Enable == 1)
+        {
+
+        }
+        else
+        {
+      Output_Acceleration= 0.f;
+      Status_Accel_Decel = 0;
+      Status_Dec_Inc = 2;
+
+        }
+    }
+    else if((Status_Accel_Decel == 1) || (Status_Accel_Decel == 2))
+    {
+     if(EBS_Enable == 1)
+        {
+
+        }
+        else
+        {
+           Output_Acceleration= 0.f;
+           Status_Accel_Decel = 0;
+        Status_Dec_Inc = 2;
+
+        }
+
+    }
+    else
+    {
+
+
+    }
+
+
+}
+
+void Acc_Dec_Dtrmn_Sys(void)
+{
+
+
+ if((CC_Enable ==1)||
+    (ACC_Enable==1) ||
+     (CWAS_Enable==1) ||
+     (EBS_Enable==1))
+ {
+  ACDS_Dtrmn_Acc_Target_Veh();
+
+
+  ACDS_Dtrmn_Safety_Dist_Reg();
+  Safety_Distance = Safety_Distance_Regulation;
+# 434 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
+  Calc_AllSafeDist();
+  Calc_AllTTCs();
+
+  Dtrmn_AccelDecelandStatus();
+  Check_Enable_of_SubFeatures();
+
+ }
+ else
+ {
+  Output_Acceleration= 0.f;
+  Status_Accel_Decel = 0;
+   Status_Dec_Inc = 2;
+
+ }
 }
