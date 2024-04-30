@@ -1,8 +1,14 @@
-# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Output\\Process_Output.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
-# 11 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Output\\Process_Output.c"
+
+
+
+
+
+
+
 # 1 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h" 1
 # 23 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h"
 # 1 "c:\\progra~2\\arduino\\hardware\\tools\\avr\\avr\\include\\stdlib.h" 1 3
@@ -881,10 +887,10 @@ static const uint8_t A5 = (19);
 static const uint8_t A6 = (20);
 static const uint8_t A7 = (21);
 # 258 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h" 2
-# 12 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c" 2
+# 9 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Output\\Process_Output.c" 2
 
 # 1 "C:\\Project\\MASTER~1\\ADAS_F~1/config.h" 1
-# 14 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c" 2
+# 11 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Output\\Process_Output.c" 2
 # 1 "C:\\Project\\MASTER~1\\ADAS_F~1/code.h" 1
 # 14 "C:\\Project\\MASTER~1\\ADAS_F~1/code.h"
 extern void Calc_Relative_Speed(float Relative_Distance);
@@ -913,402 +919,144 @@ extern char output_char[30];
 
 
 extern float Vehicle_Speed;
-# 15 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c" 2
+# 12 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Output\\Process_Output.c" 2
 
 
 
-
-float Safety_Distance;
-float Output_Acceleration = 0.f;
-int Status_Accel_Decel = 0;
-int Status_Dec_Inc = 2;
-
-
-static char skip_first_two_dat = 0;
-static float Vehicle_Speed_Prev;
-static float Relative_Speed_Prev;
-static float Target_Veh_Accel;
-
-
-
-
-static float Safety_Distance_Regulation;
-# 44 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
-static float TTC;
-static float TTC_HalfBrake;
-static float TTC_FullBrake;
-static float TTC_HalfFullBrake;
-static float TTC_SafetyDistMin;
-static float TTC_AccDisabled;
-static float TTC_AccMin;
-static float TTC_AccMax;
-
-static float SafetyDistance_HalfBrake;
-static float SafetyDistance_FullBrake;
-static float SafetyDistance_HalfFullBrake;
-static float SafetyDistance_AccDisabled;
-static float SafetyDistance_AccMin;
-static float SafetyDistance_AccMax;
-
-
-static void ACDS_Dtrmn_Acc_Target_Veh(void)
+void Process_Output(void)
 {
-   if(skip_first_two_dat < 2)
-   {
-    skip_first_two_dat++;
-   }
-   else
-   {
-    Target_Veh_Accel = ((Vehicle_Speed - Vehicle_Speed_Prev) + (Relative_Speed_Prev - Relative_Speed))/0.1f;
-   }
-
-   Vehicle_Speed_Prev = Vehicle_Speed;
-   Relative_Speed_Prev = Relative_Speed;
-
-}
-
-
-static void ACDS_Dtrmn_Safety_Dist_Reg(void)
-{
-
-
-
- Safety_Distance_Regulation = Vehicle_Speed/2;
-
-}
-# 144 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
-static void Calc_AllTTCs(void)
-{
-
-
-
-
- float Vehicle_Speed_ms;
-
- Vehicle_Speed_ms = Vehicle_Speed/3.6f;
-
- if(Relative_Speed != 0)
+ int index = 0;
+ output_char[index]= '<';
  {
-  TTC = Relative_Distance/(Relative_Speed/3.6f);
-
-
-  TTC_HalfBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*6.f))/(Relative_Speed/3.6f);
-
-  TTC_HalfFullBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*7.f))/(Relative_Speed/3.6f);
-
-  TTC_FullBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*8.f))/(Relative_Speed/3.6f);
-
-  TTC_AccDisabled = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*3.f))/(Relative_Speed/3.6f);
-
-  TTC_AccMin = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*2.5f))/(Relative_Speed/3.6f);
-
-  TTC_AccMax = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*2.f))/(Relative_Speed/3.6f);
-
-  TTC_SafetyDistMin = Safety_Distance/(Relative_Speed/3.6f);
-
- }
- else
- {
-  TTC = 3.40282347e+38F;
-
-
-  TTC_HalfBrake = 3.40282347e+38F;
-
-  TTC_HalfFullBrake = 3.40282347e+38F;
-
-  TTC_FullBrake = 3.40282347e+38F;
-
-  TTC_AccDisabled = 3.40282347e+38F;
-
-  TTC_AccMin = 3.40282347e+38F;
-
-  TTC_AccMax = 3.40282347e+38F;
-
-  TTC_SafetyDistMin = 3.40282347e+38F;
- }
-
-
-
-}
-
-
-static void Calc_AllSafeDist(void)
-{
-
-
-
-
- float Vehicle_Speed_ms;
-
- Vehicle_Speed_ms = Vehicle_Speed/3.6f;
-
-
- SafetyDistance_HalfBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*6.f));
-
- SafetyDistance_HalfFullBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*7.f));
-
- SafetyDistance_FullBrake = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*8.f));
-
- SafetyDistance_AccDisabled = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*3.f));
-
- SafetyDistance_AccMin = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*2.5f));
-
- SafetyDistance_AccMax = (((Vehicle_Speed_ms) * (Vehicle_Speed_ms)) /(2*2.f));
-
-
-
-}
-
-static void Dtrmn_AccelDecelandStatus(void)
-{
-
-
-
-
- Output_Acceleration= 0.f;
-
-
-
- if( ((Relative_Speed > 0.f) && (TTC <= TTC_FullBrake)) ||
-  ((Relative_Speed <= 0.f) && (Relative_Distance <= SafetyDistance_FullBrake )))
- {
-
-  Output_Acceleration= 8.f;
-  Status_Accel_Decel = 1;
-  Status_Dec_Inc = 0;
- }
- else if( ((Relative_Speed > 0.f) && (TTC <= TTC_HalfFullBrake)) ||
-    ((Relative_Speed <= 0.f) && (Relative_Distance <= SafetyDistance_HalfFullBrake )))
- {
-
-  Output_Acceleration= ((Vehicle_Speed/3.6f) *( Vehicle_Speed/3.6f))/(2*Relative_Distance);
-  Status_Accel_Decel = 1;
-  Status_Dec_Inc = 0;
- }
- else if( ((Relative_Speed > 0.f) && (TTC <= TTC_HalfBrake)) ||
-   ((Relative_Speed <= 0.f) && (Relative_Distance <= SafetyDistance_HalfBrake )))
- {
-
-  Output_Acceleration= ((Vehicle_Speed/3.6f) *( Vehicle_Speed/3.6f))/(2*Relative_Distance);
-  Status_Accel_Decel = 2;
-  Status_Dec_Inc = 0;
- }
- else if( ((Relative_Speed > 0.f) && (TTC <= TTC_SafetyDistMin)) ||
-   ((Relative_Speed <= 0.f) && (Relative_Distance <= Safety_Distance )))
- {
-
-  Output_Acceleration= ((Vehicle_Speed/3.6f) *( Vehicle_Speed/3.6f))/(2*Relative_Distance);
-  Status_Accel_Decel = 3;
-  Status_Dec_Inc = 0;
- }
- else if( ((Relative_Speed > 0.f) && (TTC <= TTC_AccDisabled)) ||
-   ((Relative_Speed <= 0.f) && (Relative_Distance <= SafetyDistance_AccDisabled )))
- {
-
-  Output_Acceleration= 0.f;
-  Status_Accel_Decel = 0;
-  Status_Dec_Inc = 2;
- }
- else if( ((Relative_Speed > 0.f) && (TTC <= TTC_AccMin)) ||
-   ((Relative_Speed <= 0.f) && (Relative_Distance <= SafetyDistance_AccMin )))
- {
-
-  Output_Acceleration= ((Vehicle_Speed/3.6f) *( Vehicle_Speed/3.6f))/(2*Relative_Distance);
-  if(Output_Acceleration > 3.f)
+  int relative_dist = (int)(Relative_Distance* 10) ;
+  int rel_dist_count = relative_dist;
+  int count=0;
+  while(rel_dist_count > 0)
   {
-   Output_Acceleration = 3.f;
-  }
-  Status_Accel_Decel = 4;
-  Status_Dec_Inc = 0;
-
- }
- else if( ((Relative_Speed > 0.f) && (TTC <= TTC_AccMax)) ||
-   ((Relative_Speed <= 0.f) && (Relative_Distance <= SafetyDistance_AccMax )))
- {
-  if(Relative_Speed > 0.f)
-  {
-
-   Output_Acceleration= ((Relative_Speed/3.6f) *( Relative_Speed/3.6f))/(2*(Relative_Distance - SafetyDistance_AccMin));
-   if(Output_Acceleration > 3.f)
-   {
-    Output_Acceleration = 3.f;
-   }
-   Status_Accel_Decel = 4;
-   Status_Dec_Inc = 0;
-  }
-  else if (Relative_Speed < 0.f)
-  {
-
-   if(Speed_SetbyDriver > Vehicle_Speed )
-   {
-    Output_Acceleration= ((Relative_Speed/3.6f) *( Relative_Speed/3.6f))/(2*(Relative_Distance - SafetyDistance_AccMin));
-    if(Output_Acceleration > 3.f)
-    {
-     Output_Acceleration = 3.f;
-    }
-    Status_Accel_Decel = 4;
-    Status_Dec_Inc = 1;
-   }
-   else
-   {
-    Output_Acceleration = 0.f;
-    Status_Accel_Decel = 4;
-    Status_Dec_Inc = 2;
-   }
+   rel_dist_count /=10;
+   count++;
 
   }
-  else
-  {
+  char str[count+1];
+  snprintf(str, sizeof(str), "%d", relative_dist);
 
-   Output_Acceleration= 0.f;
-   Status_Accel_Decel = 4;
-   Status_Dec_Inc = 2;
+  for(int i= 0; i<count; i++)
+  {
+   index++;
+   output_char[index]= str[i];
   }
  }
- else if( ((Relative_Speed > 0.f) && (TTC > TTC_AccMax)) ||
-   ((Relative_Speed <= 0.f) && (Relative_Distance > SafetyDistance_AccMax )))
- {
 
-  if(Speed_SetbyDriver > Vehicle_Speed )
-  {
-   if((Speed_SetbyDriver - Vehicle_Speed) > 3.f)
-   {
-    Output_Acceleration = 3.f;
-    Status_Accel_Decel = 5;
-    Status_Dec_Inc = 1;
-   }
-   else
-   {
-    Output_Acceleration = Speed_SetbyDriver - Vehicle_Speed;
-    Status_Accel_Decel = 5;
-    Status_Dec_Inc = 1;
-   }
-  }
-  else if(Speed_SetbyDriver < Vehicle_Speed)
-  {
-   if((Speed_SetbyDriver - Vehicle_Speed) < -3.f)
-   {
-    Output_Acceleration = 3.f;
-    Status_Accel_Decel = 5;
-    Status_Dec_Inc = 0;
-   }
-   else
-   {
-    Output_Acceleration = Vehicle_Speed - Speed_SetbyDriver;
-    Status_Accel_Decel = 5;
-    Status_Dec_Inc = 0;
-   }
-  }
-  else
-  {
-   Output_Acceleration = 0;
-   Status_Accel_Decel = 5;
-   Status_Dec_Inc = 2;
-  }
- }
- else
- {
-
- }
-
-}
-
-
-void Check_Enable_of_SubFeatures(void)
+ index ++;
+ output_char[index]= '.';
 {
-    if(Status_Accel_Decel == 5)
-    {
-     if((CC_Enable == 1) || (ACC_Enable == 1))
-        {
+  int veh_speed = (int)(Vehicle_Speed);
+  int veh_speed_count = veh_speed;
+  int count=0;
+  while(veh_speed_count > 0)
+  {
+   veh_speed_count /=10;
+   count++;
 
-        }
-        else
-        {
-      Output_Acceleration= 0.f;
-      Status_Accel_Decel = 0;
-      Status_Dec_Inc = 2;
-
-        }
-    }
-    else if(Status_Accel_Decel == 4)
-    {
-     if(ACC_Enable == 1)
-        {
-
-        }
-        else
-        {
-      Output_Acceleration= 0.f;
-      Status_Accel_Decel = 0;
-      Status_Dec_Inc = 2;
-
-        }
-    }
-    else if(Status_Accel_Decel == 3)
-    {
-     if(CWAS_Enable == 1)
-        {
-
-        }
-        else
-        {
-      Output_Acceleration= 0.f;
-      Status_Accel_Decel = 0;
-      Status_Dec_Inc = 2;
-
-        }
-    }
-    else if((Status_Accel_Decel == 1) || (Status_Accel_Decel == 2))
-    {
-     if(EBS_Enable == 1)
-        {
-
-        }
-        else
-        {
-           Output_Acceleration= 0.f;
-           Status_Accel_Decel = 0;
-        Status_Dec_Inc = 2;
-
-        }
-
-    }
-    else
-    {
-
-
-    }
-
-
-}
-
-void Acc_Dec_Dtrmn_Sys(void)
-{
-
-
- if((CC_Enable ==1)||
-    (ACC_Enable==1) ||
-     (CWAS_Enable==1) ||
-     (EBS_Enable==1))
- {
-  ACDS_Dtrmn_Acc_Target_Veh();
-
-
-  ACDS_Dtrmn_Safety_Dist_Reg();
-  Safety_Distance = Safety_Distance_Regulation;
-# 475 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
-  Calc_AllSafeDist();
-  Calc_AllTTCs();
-
-  Dtrmn_AccelDecelandStatus();
-  Check_Enable_of_SubFeatures();
-
+  }
+  char str[count+1];
+  snprintf(str, sizeof(str), "%d", veh_speed);
+  for(int i= 0; i<count; i++)
+  {
+   index++;
+   output_char[index]= str[i];
+  }
  }
- else
- {
-  Output_Acceleration= 0.f;
-  Status_Accel_Decel = 0;
-   Status_Dec_Inc = 2;
+ index ++;
+ output_char[index]= '.';
 
+ {
+  int rel_speed = (int)(Relative_Speed *10);
+  int rel_speed_count = rel_speed;
+  int count=0;
+  while(rel_speed_count > 0)
+  {
+   rel_speed_count /=10;
+   count++;
+
+  }
+  char str[count+1];
+  snprintf(str, sizeof(str), "%d", rel_speed);
+  for(int i= 0; i<count; i++)
+  {
+   index++;
+   output_char[index]= str[i];
+  }
  }
+
+
+
+ index ++;
+ output_char[index]= '.';
+
+
+ {
+  int safe_dist = (int)(Safety_Distance*10);
+  int safe_dist_count = safe_dist;
+  int count=0;
+  while(safe_dist_count > 0)
+  {
+   safe_dist_count /=10;
+   count++;
+
+  }
+  char str[count+1];
+  snprintf(str, sizeof(str), "%d", safe_dist);
+  for(int i= 0; i<count; i++)
+  {
+   index++;
+   output_char[index]= str[i];
+  }
+ }
+
+
+
+ index ++;
+ output_char[index]= '.';
+
+ {
+  int out_accel = (int)(Output_Acceleration*1000);;
+  int out_accel_count = out_accel;
+  int count=0;
+  while(out_accel_count > 0)
+  {
+   out_accel_count /=10;
+   count++;
+
+  }
+  char str[count+1];
+  snprintf(str, sizeof(str), "%d", out_accel);
+  for(int i= 0; i<count; i++)
+  {
+   index++;
+   output_char[index]= str[i];
+  }
+ }
+
+
+
+ index ++;
+ output_char[index]= '.';
+
+ index ++;
+
+ output_char[index]= (char)(Status_Accel_Decel + '0');
+ index ++;
+ output_char[index]= '.';
+
+ index ++;
+
+ output_char[index]= (char)(Status_Dec_Inc + '0');
+
+ index ++;
+ output_char[index]= '>';
+ index ++;
+ output_char[index]= '\0';
+
+
 }

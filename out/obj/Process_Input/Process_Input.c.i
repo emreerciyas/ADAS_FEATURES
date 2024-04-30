@@ -895,6 +895,9 @@ static const uint8_t A7 = (21);
 # 14 "C:\\Project\\MASTER~1\\ADAS_F~1/code.h"
 extern void Calc_Relative_Speed(float Relative_Distance);
 extern void Acc_Dec_Dtrmn_Sys(void);
+extern void Process_Output(void);
+extern void Process_Input(void);
+extern void Run_Test_with_Internal_Variable(void);
 
 extern float Relative_Distance;
 extern float Relative_Speed;
@@ -904,22 +907,56 @@ extern float Output_Acceleration;
 extern int Status_Accel_Decel;
 extern int Status_Dec_Inc;
 
+extern float Safety_Distance;
+
 extern unsigned int CC_Enable;
 extern unsigned int ACC_Enable;
 extern unsigned int CWAS_Enable;
 extern unsigned int EBS_Enable;
 
+extern char output_char[30];
+
+
+
 extern float Vehicle_Speed;
 # 12 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c" 2
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1/test_config.h" 1
+# 12 "C:\\Project\\MASTER~1\\ADAS_F~1/test_config.h"
+extern unsigned int CC_Enable_Internal_Test;
+extern unsigned int ACC_Enable_Internal_Test;
+extern unsigned int CWAS_Enable_Internal_Test;
+extern unsigned int EBS_Enable_Internal_Test;
+
+extern float Vehicle_Speed_Internal_Test;
+
+extern float Relative_Distance_Internal_Test;
+
+extern float Speed_SetbyDriver_Internal_Test;
+# 13 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c" 2
+
+unsigned int CC_Enable;
+unsigned int ACC_Enable;
+unsigned int CWAS_Enable;
+unsigned int EBS_Enable;
+
+float Vehicle_Speed;
+
+float Relative_Distance;
+
+float Speed_SetbyDriver;
 
 
-unsigned int CC_Enable = 1U;
-unsigned int ACC_Enable = 0U;
-unsigned int CWAS_Enable = 0U;
-unsigned int EBS_Enable = 0U;
+void Process_Input(void)
+{
+ CC_Enable = CC_Enable_Internal_Test;
+ ACC_Enable = ACC_Enable_Internal_Test;
+ CWAS_Enable = CWAS_Enable_Internal_Test;
+ EBS_Enable = EBS_Enable_Internal_Test;
 
-float Vehicle_Speed = 50.f;
+ Vehicle_Speed = Vehicle_Speed_Internal_Test;
 
-float Relative_Distance = 50.f;
+ Relative_Distance = Relative_Distance_Internal_Test;
 
-float Speed_SetbyDriver = 70.f;
+ Speed_SetbyDriver = Speed_SetbyDriver_Internal_Test;
+
+}

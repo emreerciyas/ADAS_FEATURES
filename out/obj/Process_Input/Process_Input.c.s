@@ -4,57 +4,62 @@ __SP_L__ = 0x3d
 __SREG__ = 0x3f
 __tmp_reg__ = 0
 __zero_reg__ = 1
-.global	Speed_SetbyDriver
-	.section	.data.Speed_SetbyDriver,"aw",@progbits
-	.type	Speed_SetbyDriver, @object
-	.size	Speed_SetbyDriver, 4
-Speed_SetbyDriver:
-	.byte	0
-	.byte	0
-	.byte	-116
-	.byte	66
-.global	Relative_Distance
-	.section	.data.Relative_Distance,"aw",@progbits
-	.type	Relative_Distance, @object
-	.size	Relative_Distance, 4
-Relative_Distance:
-	.byte	0
-	.byte	0
-	.byte	72
-	.byte	66
-.global	Vehicle_Speed
-	.section	.data.Vehicle_Speed,"aw",@progbits
-	.type	Vehicle_Speed, @object
-	.size	Vehicle_Speed, 4
-Vehicle_Speed:
-	.byte	0
-	.byte	0
-	.byte	72
-	.byte	66
-.global	EBS_Enable
-	.section	.bss.EBS_Enable,"aw",@nobits
-	.type	EBS_Enable, @object
-	.size	EBS_Enable, 2
-EBS_Enable:
-	.zero	2
-.global	CWAS_Enable
-	.section	.bss.CWAS_Enable,"aw",@nobits
-	.type	CWAS_Enable, @object
-	.size	CWAS_Enable, 2
-CWAS_Enable:
-	.zero	2
-.global	ACC_Enable
-	.section	.bss.ACC_Enable,"aw",@nobits
-	.type	ACC_Enable, @object
-	.size	ACC_Enable, 2
-ACC_Enable:
-	.zero	2
-.global	CC_Enable
-	.section	.data.CC_Enable,"aw",@progbits
-	.type	CC_Enable, @object
-	.size	CC_Enable, 2
-CC_Enable:
-	.word	1
+	.section	.text.Process_Input,"ax",@progbits
+.global	Process_Input
+	.type	Process_Input, @function
+Process_Input:
+/* prologue: function */
+/* frame size = 0 */
+/* stack size = 0 */
+.L__stack_usage = 0
+	lds r24,CC_Enable_Internal_Test
+	lds r25,CC_Enable_Internal_Test+1
+	sts CC_Enable+1,r25
+	sts CC_Enable,r24
+	lds r24,ACC_Enable_Internal_Test
+	lds r25,ACC_Enable_Internal_Test+1
+	sts ACC_Enable+1,r25
+	sts ACC_Enable,r24
+	lds r24,CWAS_Enable_Internal_Test
+	lds r25,CWAS_Enable_Internal_Test+1
+	sts CWAS_Enable+1,r25
+	sts CWAS_Enable,r24
+	lds r24,EBS_Enable_Internal_Test
+	lds r25,EBS_Enable_Internal_Test+1
+	sts EBS_Enable+1,r25
+	sts EBS_Enable,r24
+	lds r24,Vehicle_Speed_Internal_Test
+	lds r25,Vehicle_Speed_Internal_Test+1
+	lds r26,Vehicle_Speed_Internal_Test+2
+	lds r27,Vehicle_Speed_Internal_Test+3
+	sts Vehicle_Speed,r24
+	sts Vehicle_Speed+1,r25
+	sts Vehicle_Speed+2,r26
+	sts Vehicle_Speed+3,r27
+	lds r24,Relative_Distance_Internal_Test
+	lds r25,Relative_Distance_Internal_Test+1
+	lds r26,Relative_Distance_Internal_Test+2
+	lds r27,Relative_Distance_Internal_Test+3
+	sts Relative_Distance,r24
+	sts Relative_Distance+1,r25
+	sts Relative_Distance+2,r26
+	sts Relative_Distance+3,r27
+	lds r24,Speed_SetbyDriver_Internal_Test
+	lds r25,Speed_SetbyDriver_Internal_Test+1
+	lds r26,Speed_SetbyDriver_Internal_Test+2
+	lds r27,Speed_SetbyDriver_Internal_Test+3
+	sts Speed_SetbyDriver,r24
+	sts Speed_SetbyDriver+1,r25
+	sts Speed_SetbyDriver+2,r26
+	sts Speed_SetbyDriver+3,r27
+	ret
+	.size	Process_Input, .-Process_Input
+	.comm	Speed_SetbyDriver,4,1
+	.comm	Relative_Distance,4,1
+	.comm	Vehicle_Speed,4,1
+	.comm	EBS_Enable,2,1
+	.comm	CWAS_Enable,2,1
+	.comm	ACC_Enable,2,1
+	.comm	CC_Enable,2,1
 	.ident	"GCC: (GNU) 4.9.2"
-.global __do_copy_data
 .global __do_clear_bss

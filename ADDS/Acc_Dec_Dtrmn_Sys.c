@@ -303,13 +303,23 @@ static void Dtrmn_AccelDecelandStatus(void)
 		else if (Relative_Speed < 0.f)
 		{
 			/*Section7-2*/
-			Output_Acceleration= ((Relative_Speed/MS_TO_KMH) *( Relative_Speed/MS_TO_KMH))/(2*(Relative_Distance - SafetyDistance_AccMin));
-			if(Output_Acceleration > ACC_ACCEL_MAX)
+			if(Speed_SetbyDriver > Vehicle_Speed )
 			{
-				Output_Acceleration = ACC_ACCEL_MAX;
+				Output_Acceleration= ((Relative_Speed/MS_TO_KMH) *( Relative_Speed/MS_TO_KMH))/(2*(Relative_Distance - SafetyDistance_AccMin));
+				if(Output_Acceleration > ACC_ACCEL_MAX)
+				{
+					Output_Acceleration = ACC_ACCEL_MAX;
+				}
+				Status_Accel_Decel = ACC;
+				Status_Dec_Inc = ACCELERATION_INCREASED;
 			}
-			Status_Accel_Decel = ACC;
-			Status_Dec_Inc = ACCELERATION_INCREASED;
+			else
+			{
+				Output_Acceleration = 0.f;
+				Status_Accel_Decel = ACC;
+				Status_Dec_Inc = ACCELERATION_N_A;
+			}
+
 		}
 		else
 		{
@@ -340,9 +350,9 @@ static void Dtrmn_AccelDecelandStatus(void)
 		}
 		else if(Speed_SetbyDriver < Vehicle_Speed)
 		{
-			if((Vehicle_Speed - Speed_SetbyDriver) > ACC_DECEL_MAX)
+			if((Speed_SetbyDriver - Vehicle_Speed) < ACC_DECEL_MAX)
 			{
-				Output_Acceleration = ACC_DECEL_MAX;
+				Output_Acceleration = ACC_ACCEL_MAX;
 				Status_Accel_Decel = CC;
 				Status_Dec_Inc = ACCELERATION_DECREASED;
 			}
@@ -352,6 +362,12 @@ static void Dtrmn_AccelDecelandStatus(void)
 				Status_Accel_Decel = CC;
 				Status_Dec_Inc = ACCELERATION_DECREASED;
 			}
+		}
+		else
+		{
+			Output_Acceleration = 0;
+			Status_Accel_Decel = CC;
+			Status_Dec_Inc = ACCELERATION_N_A;
 		}
 	}
 	else
@@ -451,7 +467,7 @@ void Acc_Dec_Dtrmn_Sys(void)
 		Safety_Distance = Safety_Distance_CTH;
 #endif
 
-#if ACTIVE_SAFETY_DISTANCE == SAFETY_DISTANCE_CTH
+#if ACTIVE_SAFETY_DISTANCE == SAFETY_DISTANCE_VTH
 		Calc_Safety_Dist_VTH();
 		Safety_Distance = Safety_Distance_VTH;
 #endif
