@@ -914,7 +914,7 @@ extern unsigned int ACC_Enable;
 extern unsigned int CWAS_Enable;
 extern unsigned int EBS_Enable;
 
-extern char output_char[30];
+extern char output_char[31];
 
 
 

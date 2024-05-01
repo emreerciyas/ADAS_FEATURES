@@ -228,7 +228,7 @@ int main(void)
 
 /*************************************************************************************/
 /* global variable*/
-char output_char[30];
+char output_char[31];
 /*************************************************************************************/
 
 /*
@@ -273,14 +273,16 @@ Serial.print(output_char);*/
 
 	Process_Input();
 
-	if((Vehicle_Speed >= VEHICLE_SPEED_MIN) && (Relative_Distance <= RELATIVE_DIST_MIN))
-	{
-		serial_print("Car has crashed !!!!!!\r\n");
-	}
-	else if (Vehicle_Speed < VEHICLE_SPEED_MIN)
+
+	if (Vehicle_Speed < VEHICLE_SPEED_MIN)
 	{
 		serial_print("Car has stopped !!!!!!\r\n");
 	}
+	else if((Vehicle_Speed >= VEHICLE_SPEED_MIN) && (Relative_Distance <= RELATIVE_DIST_MIN))
+	{
+		serial_print("Car has crashed !!!!!!\r\n");
+	}
+
 	else
 	{
 		Calc_Relative_Speed( Relative_Distance);

@@ -313,6 +313,21 @@ static void Dtrmn_AccelDecelandStatus(void)
 				Status_Accel_Decel = ACC;
 				Status_Dec_Inc = ACCELERATION_INCREASED;
 			}
+			else if(Speed_SetbyDriver < Vehicle_Speed)
+			{
+				if((Speed_SetbyDriver - Vehicle_Speed) < ACC_DECEL_MAX)
+				{
+					Output_Acceleration = ACC_ACCEL_MAX;
+					Status_Accel_Decel = ACC;
+					Status_Dec_Inc = ACCELERATION_DECREASED;
+				}
+				else
+				{
+					Output_Acceleration = Vehicle_Speed - Speed_SetbyDriver;
+					Status_Accel_Decel = ACC;
+					Status_Dec_Inc = ACCELERATION_DECREASED;
+				}
+			}
 			else
 			{
 				Output_Acceleration = 0.f;

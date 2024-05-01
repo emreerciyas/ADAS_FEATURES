@@ -293,14 +293,14 @@ idle_hook:
 	pop r16
 	ret
 	.size	idle_hook, .-idle_hook
-.global	__gesf2
-.global	__lesf2
+.global	__ltsf2
 	.section	.rodata.str1.1
 .LC2:
-	.string	"Car has crashed !!!!!!\r\n"
-.global	__ltsf2
-.LC3:
 	.string	"Car has stopped !!!!!!\r\n"
+.global	__gesf2
+.global	__lesf2
+.LC3:
+	.string	"Car has crashed !!!!!!\r\n"
 .LC4:
 	.string	"\r\n"
 	.section	.text.FuncTask1,"ax",@progbits
@@ -330,9 +330,22 @@ FuncTask1:
 	ldi r21,lo8(63)
 	movw r24,r14
 	movw r22,r12
+	call __ltsf2
+	sbrs r24,7
+	rjmp .L42
+	ldi r24,lo8(.LC2)
+	ldi r25,hi8(.LC2)
+	rjmp .L43
+.L42:
+	ldi r18,0
+	ldi r19,0
+	ldi r20,lo8(-128)
+	ldi r21,lo8(63)
+	movw r24,r14
+	movw r22,r12
 	call __gesf2
 	sbrc r24,7
-	rjmp .L33
+	rjmp .L36
 	ldi r18,0
 	ldi r19,0
 	ldi r20,0
@@ -343,26 +356,13 @@ FuncTask1:
 	lds r25,Relative_Distance+3
 	call __lesf2
 	cp __zero_reg__,r24
-	brlt .L33
-	ldi r24,lo8(.LC2)
-	ldi r25,hi8(.LC2)
-	rjmp .L43
-.L33:
-	ldi r18,0
-	ldi r19,0
-	ldi r20,lo8(-128)
-	ldi r21,lo8(63)
-	movw r24,r14
-	movw r22,r12
-	call __ltsf2
-	sbrs r24,7
-	rjmp .L42
+	brlt .L36
 	ldi r24,lo8(.LC3)
 	ldi r25,hi8(.LC3)
 .L43:
 	call _Z12serial_printPKc
-	rjmp .L36
-.L42:
+	rjmp .L35
+.L36:
 	lds r22,Relative_Distance
 	lds r23,Relative_Distance+1
 	lds r24,Relative_Distance+2
@@ -380,7 +380,7 @@ FuncTask1:
 	ldi r24,lo8(Serial)
 	ldi r25,hi8(Serial)
 	call _ZN5Print5printEPKc
-.L36:
+.L35:
 	lds r24,task1_ended
 	subi r24,lo8(-(1))
 	sts task1_ended,r24
@@ -399,9 +399,9 @@ _ZZ8print_sphPvE3msg:
 .global	output_char
 	.section	.bss.output_char,"aw",@nobits
 	.type	output_char, @object
-	.size	output_char, 30
+	.size	output_char, 31
 output_char:
-	.zero	30
+	.zero	31
 .global	main_sp
 	.section	.bss.main_sp,"aw",@nobits
 	.type	main_sp, @object

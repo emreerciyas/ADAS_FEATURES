@@ -39,7 +39,7 @@ void Process_Output(void)
 	index ++;
 	output_char[index]=  '.';
 {
-		int veh_speed = (int)(Vehicle_Speed);
+		int veh_speed = (int)(Vehicle_Speed + 0.5f);
 		int veh_speed_count = veh_speed;
 		int count=0;
 		while(veh_speed_count > 0)
@@ -61,6 +61,12 @@ void Process_Output(void)
 
 	{
 		int rel_speed = (int)(Relative_Speed *10);
+		if(rel_speed < 0)
+		{
+			index ++;
+			output_char[index]=  '-';
+			rel_speed *= -1U;
+		}
 		int rel_speed_count = rel_speed;
 		int count=0;
 		while(rel_speed_count > 0)
@@ -109,8 +115,13 @@ void Process_Output(void)
 	output_char[index]=  '.';
 
 	{
-		int out_accel = (int)(Output_Acceleration*1000);;
+		int out_accel = (int)(Output_Acceleration*1000);
 		int out_accel_count = out_accel;
+		if((Status_Dec_Inc == ACCELERATION_DECREASED) && (out_accel_count != 0U))
+		{
+			index ++;
+			output_char[index]=  '-';
+		}
 		int count=0;
 		while(out_accel_count > 0)
 		{
@@ -135,12 +146,6 @@ void Process_Output(void)
 	index ++;
 
 	output_char[index]=  (char)(Status_Accel_Decel + '0');
-	index ++;
-	output_char[index]=  '.';
-
-	index ++;
-
-	output_char[index]=  (char)(Status_Dec_Inc + '0');
 
 	index ++;
 	output_char[index]=  '>';

@@ -2742,7 +2742,7 @@ extern unsigned int ACC_Enable;
 extern unsigned int CWAS_Enable;
 extern unsigned int EBS_Enable;
 
-extern char output_char[30];
+extern char output_char[31];
 
 
 
@@ -2848,7 +2848,7 @@ int main(void)
 
 
 
-char output_char[30];
+char output_char[31];
 
 
 
@@ -2867,14 +2867,16 @@ void FuncTask1 ( void )
 # 274 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp"
  Process_Input();
 
- if((Vehicle_Speed >= 1.f) && (Relative_Distance <= 0.5f))
- {
-  serial_print("Car has crashed !!!!!!\r\n");
- }
- else if (Vehicle_Speed < 1.f)
+
+ if (Vehicle_Speed < 1.f)
  {
   serial_print("Car has stopped !!!!!!\r\n");
  }
+ else if((Vehicle_Speed >= 1.f) && (Relative_Distance <= 0.5f))
+ {
+  serial_print("Car has crashed !!!!!!\r\n");
+ }
+
  else
  {
   Calc_Relative_Speed( Relative_Distance);
@@ -2883,7 +2885,7 @@ void FuncTask1 ( void )
   Serial.print(output_char);
   Serial.print("\r\n");
  }
-# 307 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp"
+# 309 "C:\\Project\\MASTER~1\\ADAS_F~1\\code.cpp"
   task1_ended++;
 }
 

@@ -9,6 +9,7 @@ __zero_reg__ = 1
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .LC0:
 	.string	"%d"
+.global	__addsf3
 	.section	.text.Process_Output,"ax",@progbits
 .global	Process_Output
 	.type	Process_Output, @function
@@ -61,13 +62,13 @@ Process_Output:
 	movw r12,r20
 	cp __zero_reg__,r24
 	cpc __zero_reg__,r25
-	brge .L23
+	brge .L28
 	movw r22,r30
 	call __divmodhi4
 	movw r24,r22
 	movw r10,r12
 	rjmp .L2
-.L23:
+.L28:
 	in r8,__SP_L__
 	in r9,__SP_H__
 	in r24,__SP_L__
@@ -79,10 +80,11 @@ Process_Output:
 	out __SP_H__,r25
 	out __SREG__,__tmp_reg__
 	out __SP_L__,r24
-	in r26,__SP_L__
-	in r27,__SP_H__
-	adiw r26,1
-	movw r14,r26
+	in r20,__SP_L__
+	in r21,__SP_H__
+	subi r20,-1
+	sbci r21,-1
+	movw r14,r20
 	push r19
 	push r18
 	ldi r24,lo8(.LC0)
@@ -90,9 +92,9 @@ Process_Output:
 	push r25
 	push r24
 	push r13
-	push r20
+	push r12
 	push r15
-	push r26
+	push r20
 	call snprintf
 	movw r30,r14
 	ldi r26,lo8(output_char+1)
@@ -112,11 +114,11 @@ Process_Output:
 .L4:
 	cp r30,r24
 	cpc r31,r25
-	breq .L24
+	breq .L29
 	ld r18,Z+
 	st X+,r18
 	rjmp .L4
-.L24:
+.L29:
 	in __tmp_reg__,__SREG__
 	cli
 	out __SP_H__,r9
@@ -127,10 +129,15 @@ Process_Output:
 	subi r30,lo8(-(output_char))
 	sbci r31,hi8(-(output_char))
 	st Z,r24
+	ldi r18,0
+	ldi r19,0
+	ldi r20,0
+	ldi r21,lo8(63)
 	lds r22,Vehicle_Speed
 	lds r23,Vehicle_Speed+1
 	lds r24,Vehicle_Speed+2
 	lds r25,Vehicle_Speed+3
+	call __addsf3
 	call __fixsfsi
 	mov r20,r22
 	mov r5,r23
@@ -146,15 +153,15 @@ Process_Output:
 	sbci r19,-1
 	cp __zero_reg__,r24
 	cpc __zero_reg__,r25
-	brge .L25
+	brge .L30
 	movw r22,r30
 	call __divmodhi4
 	movw r24,r22
 	movw r6,r18
 	rjmp .L6
-.L25:
-	in r8,__SP_L__
-	in r9,__SP_H__
+.L30:
+	in r14,__SP_L__
+	in r15,__SP_H__
 	in r24,__SP_L__
 	in r25,__SP_H__
 	sub r24,r18
@@ -164,10 +171,8 @@ Process_Output:
 	out __SP_H__,r25
 	out __SREG__,__tmp_reg__
 	out __SP_L__,r24
-	in r26,__SP_L__
-	in r27,__SP_H__
-	adiw r26,1
-	movw r14,r26
+	adiw r24,1
+	movw r8,r24
 	push r5
 	push r20
 	ldi r24,lo8(.LC0)
@@ -176,10 +181,10 @@ Process_Output:
 	push r24
 	push r19
 	push r18
-	push r15
-	push r26
+	push r9
+	push r8
 	call snprintf
-	movw r30,r14
+	movw r30,r8
 	in r18,__SP_L__
 	in r19,__SP_H__
 	subi r18,-8
@@ -189,37 +194,35 @@ Process_Output:
 	out __SP_H__,r19
 	out __SREG__,__tmp_reg__
 	out __SP_L__,r18
-	mov r14,__zero_reg__
-	mov r15,__zero_reg__
+	ldi r24,0
+	ldi r25,0
 .L8:
-	cp r14,r6
-	cpc r15,r7
-	breq .L26
-	ld r24,Z+
-	movw r26,r14
+	cp r24,r6
+	cpc r25,r7
+	breq .L31
+	ld r18,Z+
+	movw r26,r24
 	add r26,r10
 	adc r27,r11
 	subi r26,lo8(-(output_char))
 	sbci r27,hi8(-(output_char))
 	adiw r26,2
-	st X,r24
-	ldi r19,-1
-	sub r14,r19
-	sbc r15,r19
+	st X,r18
+	adiw r24,1
 	rjmp .L8
-.L26:
-	add r14,r12
-	adc r15,r13
+.L31:
+	add r12,r24
+	adc r13,r25
 	in __tmp_reg__,__SREG__
 	cli
-	out __SP_H__,r9
+	out __SP_H__,r15
 	out __SREG__,__tmp_reg__
-	out __SP_L__,r8
-	movw r12,r14
-	ldi r20,-1
-	sub r12,r20
-	sbc r13,r20
-	movw r30,r12
+	out __SP_L__,r14
+	movw r10,r12
+	ldi r19,-1
+	sub r10,r19
+	sbc r11,r19
+	movw r30,r10
 	subi r30,lo8(-(output_char))
 	sbci r31,hi8(-(output_char))
 	ldi r24,lo8(46)
@@ -234,92 +237,105 @@ Process_Output:
 	lds r25,Relative_Speed+3
 	call __mulsf3
 	call __fixsfsi
-	mov r20,r22
-	mov r5,r23
-	mov r24,r22
-	mov r25,r5
-	mov r6,__zero_reg__
-	mov r7,__zero_reg__
-	ldi r30,lo8(10)
-	ldi r31,0
+	movw r18,r22
+	sbrs r23,7
+	rjmp .L10
+	movw r10,r12
+	ldi r20,2
+	add r10,r20
+	adc r11,__zero_reg__
+	movw r30,r10
+	subi r30,lo8(-(output_char))
+	sbci r31,hi8(-(output_char))
+	ldi r18,lo8(45)
+	st Z,r18
+	clr r18
+	clr r19
+	sub r18,r22
+	sbc r19,r23
 .L10:
-	movw r18,r6
-	subi r18,-1
-	sbci r19,-1
+	movw r24,r18
+	mov r8,__zero_reg__
+	mov r9,__zero_reg__
+	ldi r21,lo8(10)
+	mov r14,r21
+	mov r15,__zero_reg__
+.L11:
+	movw r30,r8
+	adiw r30,1
 	cp __zero_reg__,r24
 	cpc __zero_reg__,r25
-	brge .L27
-	movw r22,r30
+	brge .L32
+	movw r22,r14
 	call __divmodhi4
 	movw r24,r22
-	movw r6,r18
-	rjmp .L10
-.L27:
-	in r10,__SP_L__
-	in r11,__SP_H__
+	movw r8,r30
+	rjmp .L11
+.L32:
+	in r12,__SP_L__
+	in r13,__SP_H__
 	in r24,__SP_L__
 	in r25,__SP_H__
-	sub r24,r18
-	sbc r25,r19
+	sub r24,r30
+	sbc r25,r31
 	in __tmp_reg__,__SREG__
 	cli
 	out __SP_H__,r25
 	out __SREG__,__tmp_reg__
 	out __SP_L__,r24
-	in r26,__SP_L__
-	in r27,__SP_H__
-	adiw r26,1
-	movw r8,r26
-	push r5
-	push r20
+	in r20,__SP_L__
+	in r21,__SP_H__
+	subi r20,-1
+	sbci r21,-1
+	movw r14,r20
+	push r19
+	push r18
 	ldi r24,lo8(.LC0)
 	ldi r25,hi8(.LC0)
 	push r25
 	push r24
-	push r19
-	push r18
-	push r9
-	push r26
+	push r31
+	push r30
+	push r15
+	push r20
 	call snprintf
-	movw r30,r8
-	in r18,__SP_L__
-	in r19,__SP_H__
-	subi r18,-8
-	sbci r19,-1
+	movw r30,r14
+	in r24,__SP_L__
+	in r25,__SP_H__
+	adiw r24,8
 	in __tmp_reg__,__SREG__
 	cli
-	out __SP_H__,r19
+	out __SP_H__,r25
 	out __SREG__,__tmp_reg__
-	out __SP_L__,r18
+	out __SP_L__,r24
 	ldi r24,0
 	ldi r25,0
-.L12:
-	cp r24,r6
-	cpc r25,r7
-	breq .L28
+.L13:
+	movw r14,r24
+	add r14,r10
+	adc r15,r11
+	cp r24,r8
+	cpc r25,r9
+	breq .L33
 	ld r18,Z+
-	movw r26,r24
-	add r26,r14
-	adc r27,r15
+	movw r26,r14
 	subi r26,lo8(-(output_char))
 	sbci r27,hi8(-(output_char))
-	adiw r26,2
+	adiw r26,1
 	st X,r18
 	adiw r24,1
-	rjmp .L12
-.L28:
-	add r12,r24
-	adc r13,r25
+	rjmp .L13
+.L33:
 	in __tmp_reg__,__SREG__
 	cli
-	out __SP_H__,r11
+	out __SP_H__,r13
 	out __SREG__,__tmp_reg__
-	out __SP_L__,r10
-	movw r14,r12
-	ldi r19,-1
-	sub r14,r19
-	sbc r15,r19
-	movw r30,r14
+	out __SP_L__,r12
+	movw r12,r14
+	ldi r25,-1
+	sub r12,r25
+	sbc r13,r25
+	movw r30,r12
 	subi r30,lo8(-(output_char))
 	sbci r31,hi8(-(output_char))
 	ldi r24,lo8(46)
@@ -342,19 +358,19 @@ Process_Output:
 	mov r7,__zero_reg__
 	ldi r30,lo8(10)
 	ldi r31,0
-.L14:
+.L15:
 	movw r18,r6
 	subi r18,-1
 	sbci r19,-1
 	cp __zero_reg__,r24
 	cpc __zero_reg__,r25
-	brge .L29
+	brge .L34
 	movw r22,r30
 	call __divmodhi4
 	movw r24,r22
 	movw r6,r18
-	rjmp .L14
-.L29:
+	rjmp .L15
+.L34:
 	in r10,__SP_L__
 	in r11,__SP_H__
 	in r24,__SP_L__
@@ -366,10 +382,8 @@ Process_Output:
 	out __SP_H__,r25
 	out __SREG__,__tmp_reg__
 	out __SP_L__,r24
-	in r26,__SP_L__
-	in r27,__SP_H__
-	adiw r26,1
-	movw r8,r26
+	adiw r24,1
+	movw r8,r24
 	push r5
 	push r20
 	ldi r24,lo8(.LC0)
@@ -379,7 +393,7 @@ Process_Output:
 	push r19
 	push r18
 	push r9
-	push r26
+	push r8
 	call snprintf
 	movw r30,r8
 	in r18,__SP_L__
@@ -393,33 +407,33 @@ Process_Output:
 	out __SP_L__,r18
 	ldi r24,0
 	ldi r25,0
-.L16:
+.L17:
 	cp r24,r6
 	cpc r25,r7
-	breq .L30
+	breq .L35
 	ld r18,Z+
 	movw r26,r24
-	add r26,r12
-	adc r27,r13
+	add r26,r14
+	adc r27,r15
 	subi r26,lo8(-(output_char))
 	sbci r27,hi8(-(output_char))
 	adiw r26,2
 	st X,r18
 	adiw r24,1
-	rjmp .L16
-.L30:
-	add r14,r24
-	adc r15,r25
+	rjmp .L17
+.L35:
+	add r12,r24
+	adc r13,r25
 	in __tmp_reg__,__SREG__
 	cli
 	out __SP_H__,r11
 	out __SREG__,__tmp_reg__
 	out __SP_L__,r10
-	movw r12,r14
+	movw r14,r12
 	ldi r19,-1
-	sub r12,r19
-	sbc r13,r19
-	movw r30,r12
+	sub r14,r19
+	sbc r15,r19
+	movw r30,r14
 	subi r30,lo8(-(output_char))
 	sbci r31,hi8(-(output_char))
 	ldi r24,lo8(46)
@@ -434,97 +448,102 @@ Process_Output:
 	lds r25,Output_Acceleration+3
 	call __mulsf3
 	call __fixsfsi
-	mov r20,r22
-	mov r7,r23
-	mov r24,r22
-	mov r25,r7
-	mov r10,__zero_reg__
+	movw r18,r22
+	movw r24,r22
+	lds r20,Status_Dec_Inc
+	lds r21,Status_Dec_Inc+1
+	or r20,r21
+	brne .L19
+	or r24,r25
+	breq .L19
+	movw r14,r12
+	ldi r20,2
+	add r14,r20
+	adc r15,__zero_reg__
+	movw r30,r14
+	subi r30,lo8(-(output_char))
+	sbci r31,hi8(-(output_char))
+	ldi r24,lo8(45)
+	st Z,r24
+.L19:
+	movw r24,r18
+	mov r12,__zero_reg__
+	mov r13,__zero_reg__
+	ldi r20,lo8(10)
+	mov r10,r20
 	mov r11,__zero_reg__
-	ldi r30,lo8(10)
-	ldi r31,0
-.L18:
-	movw r18,r10
-	subi r18,-1
-	sbci r19,-1
+.L20:
+	movw r30,r12
+	adiw r30,1
 	cp __zero_reg__,r24
 	cpc __zero_reg__,r25
-	brge .L31
-	movw r22,r30
+	brge .L36
+	movw r22,r10
 	call __divmodhi4
 	movw r24,r22
-	movw r10,r18
-	rjmp .L18
-.L31:
+	movw r12,r30
+	rjmp .L20
+.L36:
 	in r24,__SP_L__
 	in r25,__SP_H__
-	sub r24,r18
-	sbc r25,r19
+	sub r24,r30
+	sbc r25,r31
 	in __tmp_reg__,__SREG__
 	cli
 	out __SP_H__,r25
 	out __SREG__,__tmp_reg__
 	out __SP_L__,r24
-	in r26,__SP_L__
-	in r27,__SP_H__
-	adiw r26,1
-	movw r8,r26
-	push r7
-	push r20
+	in r20,__SP_L__
+	in r21,__SP_H__
+	subi r20,-1
+	sbci r21,-1
+	movw r10,r20
+	push r19
+	push r18
 	ldi r24,lo8(.LC0)
 	ldi r25,hi8(.LC0)
 	push r25
 	push r24
-	push r19
-	push r18
-	push r9
-	push r26
+	push r31
+	push r30
+	push r11
+	push r20
 	call snprintf
-	movw r20,r8
-	in r18,__SP_L__
-	in r19,__SP_H__
-	subi r18,-8
-	sbci r19,-1
+	movw r26,r10
+	in r24,__SP_L__
+	in r25,__SP_H__
+	adiw r24,8
 	in __tmp_reg__,__SREG__
 	cli
-	out __SP_H__,r19
+	out __SP_H__,r25
 	out __SREG__,__tmp_reg__
-	out __SP_L__,r18
-	ldi r30,0
-	ldi r31,0
-.L20:
-	cp r30,r10
-	cpc r31,r11
-	breq .L32
-	movw r26,r20
+	out __SP_L__,r24
+	ldi r24,0
+	ldi r25,0
+.L22:
+	movw r30,r24
+	add r30,r14
+	adc r31,r15
+	cp r24,r12
+	cpc r25,r13
+	breq .L37
 	ld r18,X+
-	movw r20,r26
-	movw r24,r30
-	add r24,r14
-	adc r25,r15
-	subi r24,lo8(-(output_char))
-	sbci r25,hi8(-(output_char))
-	movw r26,r24
-	adiw r26,2
-	st X,r18
-	adiw r30,1
-	rjmp .L20
-.L32:
-	add r30,r12
-	adc r31,r13
 	subi r30,lo8(-(output_char))
 	sbci r31,hi8(-(output_char))
-	ldi r25,lo8(46)
-	std Z+1,r25
+	std Z+1,r18
+	adiw r24,1
+	rjmp .L22
+.L37:
+	subi r30,lo8(-(output_char))
+	sbci r31,hi8(-(output_char))
+	ldi r24,lo8(46)
+	std Z+1,r24
 	lds r24,Status_Accel_Decel
 	subi r24,lo8(-(48))
 	std Z+2,r24
-	std Z+3,r25
-	lds r24,Status_Dec_Inc
-	subi r24,lo8(-(48))
-	std Z+4,r24
 	ldi r24,lo8(62)
-	std Z+5,r24
-	std Z+6,__zero_reg__
+	std Z+3,r24
+	std Z+4,__zero_reg__
 	in __tmp_reg__,__SREG__
 	cli
 	out __SP_H__,r17

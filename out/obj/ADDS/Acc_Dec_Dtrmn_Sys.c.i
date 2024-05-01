@@ -908,7 +908,7 @@ extern unsigned int ACC_Enable;
 extern unsigned int CWAS_Enable;
 extern unsigned int EBS_Enable;
 
-extern char output_char[30];
+extern char output_char[31];
 
 
 
@@ -928,12 +928,10 @@ static char skip_first_two_dat = 0;
 static float Vehicle_Speed_Prev;
 static float Relative_Speed_Prev;
 static float Target_Veh_Accel;
+# 41 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
+static float Safety_Distance_VTH;
 
 
-
-
-static float Safety_Distance_Regulation;
-# 44 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
 static float TTC;
 static float TTC_HalfBrake;
 static float TTC_FullBrake;
@@ -966,17 +964,34 @@ static void ACDS_Dtrmn_Acc_Target_Veh(void)
    Relative_Speed_Prev = Relative_Speed;
 
 }
-
-
-static void ACDS_Dtrmn_Safety_Dist_Reg(void)
+# 117 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
+static void Calc_Safety_Dist_VTH(void)
 {
 
 
 
- Safety_Distance_Regulation = Vehicle_Speed/2;
+
+ float th_VTH;
+
+ th_VTH = 1.423f -(0.03588f*Relative_Speed/3.6f)-(0.0369f*Target_Veh_Accel);
+
+ if(th_VTH > 2.2f)
+ {
+  th_VTH = 2.2f;
+ }
+ else if (th_VTH <= 0.2f)
+ {
+  th_VTH = 0.2f;
+ }
+ else
+ {
+
+ }
+ Safety_Distance_VTH = 5.f +((Vehicle_Speed/3.6f)*th_VTH);
 
 }
-# 144 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
+
+
 static void Calc_AllTTCs(void)
 {
 
@@ -1149,6 +1164,21 @@ static void Dtrmn_AccelDecelandStatus(void)
     Status_Accel_Decel = 4;
     Status_Dec_Inc = 1;
    }
+   else if(Speed_SetbyDriver < Vehicle_Speed)
+   {
+    if((Speed_SetbyDriver - Vehicle_Speed) < -3.f)
+    {
+     Output_Acceleration = 3.f;
+     Status_Accel_Decel = 4;
+     Status_Dec_Inc = 0;
+    }
+    else
+    {
+     Output_Acceleration = Vehicle_Speed - Speed_SetbyDriver;
+     Status_Accel_Decel = 4;
+     Status_Dec_Inc = 0;
+    }
+   }
    else
    {
     Output_Acceleration = 0.f;
@@ -1292,11 +1322,11 @@ void Acc_Dec_Dtrmn_Sys(void)
      (EBS_Enable==1))
  {
   ACDS_Dtrmn_Acc_Target_Veh();
+# 486 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
+  Calc_Safety_Dist_VTH();
+  Safety_Distance = Safety_Distance_VTH;
 
 
-  ACDS_Dtrmn_Safety_Dist_Reg();
-  Safety_Distance = Safety_Distance_Regulation;
-# 475 "C:\\Project\\MASTER~1\\ADAS_F~1\\ADDS\\Acc_Dec_Dtrmn_Sys.c"
   Calc_AllSafeDist();
   Calc_AllTTCs();
 
