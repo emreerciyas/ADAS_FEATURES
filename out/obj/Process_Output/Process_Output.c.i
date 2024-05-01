@@ -1,7 +1,7 @@
-# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Output\\Process_Output.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c"
+# 1 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Output\\Process_Output.c"
 
 
 
@@ -887,10 +887,10 @@ static const uint8_t A5 = (19);
 static const uint8_t A6 = (20);
 static const uint8_t A7 = (21);
 # 258 "C:\\PROGRA~2\\Arduino/hardware/arduino/avr/cores/arduino/Arduino.h" 2
-# 9 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c" 2
+# 9 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Output\\Process_Output.c" 2
 
 # 1 "C:\\Project\\MASTER~1\\ADAS_F~1/config.h" 1
-# 11 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c" 2
+# 11 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Output\\Process_Output.c" 2
 # 1 "C:\\Project\\MASTER~1\\ADAS_F~1/code.h" 1
 # 14 "C:\\Project\\MASTER~1\\ADAS_F~1/code.h"
 extern void Calc_Relative_Speed(float Relative_Distance);
@@ -919,44 +919,149 @@ extern char output_char[31];
 
 
 extern float Vehicle_Speed;
-# 12 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c" 2
-# 1 "C:\\Project\\MASTER~1\\ADAS_F~1/test_config.h" 1
-# 12 "C:\\Project\\MASTER~1\\ADAS_F~1/test_config.h"
-extern unsigned int CC_Enable_Internal_Test;
-extern unsigned int ACC_Enable_Internal_Test;
-extern unsigned int CWAS_Enable_Internal_Test;
-extern unsigned int EBS_Enable_Internal_Test;
-
-extern float Vehicle_Speed_Internal_Test;
-
-extern float Relative_Distance_Internal_Test;
-
-extern float Speed_SetbyDriver_Internal_Test;
-# 13 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Input\\Process_Input.c" 2
-
-unsigned int CC_Enable;
-unsigned int ACC_Enable;
-unsigned int CWAS_Enable;
-unsigned int EBS_Enable;
-
-float Vehicle_Speed;
-
-float Relative_Distance;
-
-float Speed_SetbyDriver;
+# 12 "C:\\Project\\MASTER~1\\ADAS_F~1\\Process_Output\\Process_Output.c" 2
 
 
-void Process_Input(void)
+
+void Process_Output(void)
 {
- CC_Enable = CC_Enable_Internal_Test;
- ACC_Enable = ACC_Enable_Internal_Test;
- CWAS_Enable = CWAS_Enable_Internal_Test;
- EBS_Enable = EBS_Enable_Internal_Test;
+ int index = 0;
+ output_char[index]= '<';
+ {
+  int relative_dist = (int)(Relative_Distance* 10) ;
+  int rel_dist_count = relative_dist;
+  int count=0;
+  while(rel_dist_count > 0)
+  {
+   rel_dist_count /=10;
+   count++;
 
- Vehicle_Speed = Vehicle_Speed_Internal_Test;
+  }
+  char str[count+1];
+  snprintf(str, sizeof(str), "%d", relative_dist);
 
- Relative_Distance = Relative_Distance_Internal_Test;
+  for(int i= 0; i<count; i++)
+  {
+   index++;
+   output_char[index]= str[i];
+  }
+ }
 
- Speed_SetbyDriver = Speed_SetbyDriver_Internal_Test;
+ index ++;
+ output_char[index]= '.';
+{
+  int veh_speed = (int)(Vehicle_Speed + 0.5f);
+  int veh_speed_count = veh_speed;
+  int count=0;
+  while(veh_speed_count > 0)
+  {
+   veh_speed_count /=10;
+   count++;
+
+  }
+  char str[count+1];
+  snprintf(str, sizeof(str), "%d", veh_speed);
+  for(int i= 0; i<count; i++)
+  {
+   index++;
+   output_char[index]= str[i];
+  }
+ }
+ index ++;
+ output_char[index]= '.';
+
+ {
+  int rel_speed = (int)(Relative_Speed *10);
+  if(rel_speed < 0)
+  {
+   index ++;
+   output_char[index]= '-';
+   rel_speed *= -1U;
+  }
+  int rel_speed_count = rel_speed;
+  int count=0;
+  while(rel_speed_count > 0)
+  {
+   rel_speed_count /=10;
+   count++;
+
+  }
+  char str[count+1];
+  snprintf(str, sizeof(str), "%d", rel_speed);
+  for(int i= 0; i<count; i++)
+  {
+   index++;
+   output_char[index]= str[i];
+  }
+ }
+
+
+
+ index ++;
+ output_char[index]= '.';
+
+
+ {
+  int safe_dist = (int)(Safety_Distance*10);
+  int safe_dist_count = safe_dist;
+  int count=0;
+  while(safe_dist_count > 0)
+  {
+   safe_dist_count /=10;
+   count++;
+
+  }
+  char str[count+1];
+  snprintf(str, sizeof(str), "%d", safe_dist);
+  for(int i= 0; i<count; i++)
+  {
+   index++;
+   output_char[index]= str[i];
+  }
+ }
+
+
+
+ index ++;
+ output_char[index]= '.';
+
+ {
+  int out_accel = (int)(Output_Acceleration*1000);
+  int out_accel_count = out_accel;
+  if((Status_Dec_Inc == 0) && (out_accel_count != 0U))
+  {
+   index ++;
+   output_char[index]= '-';
+  }
+  int count=0;
+  while(out_accel_count > 0)
+  {
+   out_accel_count /=10;
+   count++;
+
+  }
+  char str[count+1];
+  snprintf(str, sizeof(str), "%d", out_accel);
+  for(int i= 0; i<count; i++)
+  {
+   index++;
+   output_char[index]= str[i];
+  }
+ }
+
+
+
+ index ++;
+ output_char[index]= '.';
+
+ index ++;
+
+ output_char[index]= (char)(Status_Accel_Decel + '0');
+
+ index ++;
+ output_char[index]= '>';
+ index ++;
+ output_char[index]= '\0';
+
 
 }

@@ -9,17 +9,31 @@
 
 #include "config.h"
 #include "code.h"
+#include "test_config.h"
+
+unsigned int CC_Enable;
+unsigned int  ACC_Enable;
+unsigned int  CWAS_Enable;
+unsigned int  EBS_Enable;
+
+float Vehicle_Speed;
+
+float Relative_Distance;
+
+float Speed_SetbyDriver;
 
 
-unsigned int CC_Enable = 1U;
-unsigned int  ACC_Enable = 1U;
-unsigned int  CWAS_Enable = 1U;
-unsigned int  EBS_Enable = 1U;
+void Process_Input(void)
+{
+	CC_Enable = CC_Enable_Internal_Test;
+	ACC_Enable = ACC_Enable_Internal_Test;
+	CWAS_Enable = CWAS_Enable_Internal_Test;
+	EBS_Enable = EBS_Enable_Internal_Test;
 
-float Vehicle_Speed = 50.f;
+	Vehicle_Speed = Vehicle_Speed_Internal_Test;
 
-float Relative_Distance = 50.f;
+	Relative_Distance = Relative_Distance_Internal_Test;
 
-float Speed_SetbyDriver = 70.f;
+	Speed_SetbyDriver = Speed_SetbyDriver_Internal_Test;
 
-
+}

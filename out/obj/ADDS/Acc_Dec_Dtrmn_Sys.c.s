@@ -67,6 +67,7 @@ Check_Enable_of_SubFeatures:
 .global	__mulsf3
 .global	__gtsf2
 .global	__lesf2
+.global	__nesf2
 .global	__ltsf2
 	.section	.text.Acc_Dec_Dtrmn_Sys,"ax",@progbits
 .global	Acc_Dec_Dtrmn_Sys
@@ -88,17 +89,16 @@ Acc_Dec_Dtrmn_Sys:
 	push r29
 	in r28,__SP_L__
 	in r29,__SP_H__
-	subi r28,68
-	sbc r29,__zero_reg__
+	sbiw r28,28
 	in __tmp_reg__,__SREG__
 	cli
 	out __SP_H__,r29
 	out __SREG__,__tmp_reg__
 	out __SP_L__,r28
 /* prologue: function */
-/* frame size = 68 */
-/* stack size = 82 */
-.L__stack_usage = 82
+/* frame size = 28 */
+/* stack size = 42 */
+.L__stack_usage = 42
 	lds r24,CC_Enable
 	lds r25,CC_Enable+1
 	sbiw r24,1
@@ -159,89 +159,160 @@ Acc_Dec_Dtrmn_Sys:
 	sts Target_Veh_Accel+2,r24
 	sts Target_Veh_Accel+3,r25
 .L25:
-	lds r24,Vehicle_Speed
-	lds r25,Vehicle_Speed+1
-	lds r26,Vehicle_Speed+2
-	lds r27,Vehicle_Speed+3
-	std Y+9,r24
-	std Y+10,r25
-	std Y+11,r26
-	std Y+12,r27
-	sts Vehicle_Speed_Prev,r24
-	sts Vehicle_Speed_Prev+1,r25
-	sts Vehicle_Speed_Prev+2,r26
-	sts Vehicle_Speed_Prev+3,r27
-	lds r8,Relative_Speed
-	lds r9,Relative_Speed+1
-	lds r10,Relative_Speed+2
-	lds r11,Relative_Speed+3
-	sts Relative_Speed_Prev,r8
-	sts Relative_Speed_Prev+1,r9
-	sts Relative_Speed_Prev+2,r10
-	sts Relative_Speed_Prev+3,r11
+	lds r4,Vehicle_Speed
+	lds r5,Vehicle_Speed+1
+	lds r6,Vehicle_Speed+2
+	lds r7,Vehicle_Speed+3
+	sts Vehicle_Speed_Prev,r4
+	sts Vehicle_Speed_Prev+1,r5
+	sts Vehicle_Speed_Prev+2,r6
+	sts Vehicle_Speed_Prev+3,r7
+	lds r12,Relative_Speed
+	lds r13,Relative_Speed+1
+	lds r14,Relative_Speed+2
+	lds r15,Relative_Speed+3
+	sts Relative_Speed_Prev,r12
+	sts Relative_Speed_Prev+1,r13
+	sts Relative_Speed_Prev+2,r14
+	sts Relative_Speed_Prev+3,r15
+	ldi r18,lo8(-24)
+	ldi r19,lo8(-10)
+	ldi r20,lo8(18)
+	ldi r21,lo8(61)
+	movw r24,r14
+	movw r22,r12
+	call __mulsf3
+	ldi r18,lo8(102)
+	ldi r19,lo8(102)
+	ldi r20,lo8(102)
+	ldi r21,lo8(64)
+	call __divsf3
+	movw r18,r22
+	movw r20,r24
+	ldi r22,lo8(-35)
+	ldi r23,lo8(36)
+	ldi r24,lo8(-74)
+	ldi r25,lo8(63)
+	call __subsf3
+	movw r8,r22
+	movw r10,r24
+	ldi r18,lo8(116)
+	ldi r19,lo8(36)
+	ldi r20,lo8(23)
+	ldi r21,lo8(61)
+	lds r22,Target_Veh_Accel
+	lds r23,Target_Veh_Accel+1
+	lds r24,Target_Veh_Accel+2
+	lds r25,Target_Veh_Accel+3
+	call __mulsf3
+	movw r18,r22
+	movw r20,r24
+	movw r24,r10
+	movw r22,r8
+	call __subsf3
+	movw r8,r22
+	movw r10,r24
+	ldi r18,lo8(-51)
+	ldi r19,lo8(-52)
+	ldi r20,lo8(12)
+	ldi r21,lo8(64)
+	call __gtsf2
+	cp __zero_reg__,r24
+	brlt .L130
+	ldi r18,lo8(-51)
+	ldi r19,lo8(-52)
+	ldi r20,lo8(76)
+	ldi r21,lo8(62)
+	movw r24,r10
+	movw r22,r8
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .L26
+	ldi r25,lo8(-51)
+	mov r8,r25
+	ldi r25,lo8(-52)
+	mov r9,r25
+	ldi r25,lo8(76)
+	mov r10,r25
+	ldi r25,lo8(62)
+	mov r11,r25
+	rjmp .L26
+.L130:
+	ldi r24,lo8(-51)
+	mov r8,r24
+	ldi r24,lo8(-52)
+	mov r9,r24
+	ldi r24,lo8(12)
+	mov r10,r24
+	ldi r24,lo8(64)
+	mov r11,r24
+.L26:
+	ldi r18,lo8(102)
+	ldi r19,lo8(102)
+	ldi r20,lo8(102)
+	ldi r21,lo8(64)
+	movw r24,r6
+	movw r22,r4
+	call __divsf3
+	std Y+1,r22
+	std Y+2,r23
+	std Y+3,r24
+	std Y+4,r25
+	movw r20,r10
+	movw r18,r8
+	call __mulsf3
 	ldi r18,0
 	ldi r19,0
-	ldi r20,0
-	ldi r21,lo8(63)
-	movw r22,r24
-	movw r24,r26
-	call __mulsf3
-	std Y+17,r22
-	std Y+18,r23
-	std Y+19,r24
-	std Y+20,r25
-	sts Safety_Distance_Regulation,r22
-	sts Safety_Distance_Regulation+1,r23
-	sts Safety_Distance_Regulation+2,r24
-	sts Safety_Distance_Regulation+3,r25
+	ldi r20,lo8(-96)
+	ldi r21,lo8(64)
+	call __addsf3
+	std Y+5,r22
+	std Y+6,r23
+	std Y+7,r24
+	std Y+8,r25
+	sts Safety_Distance_VTH,r22
+	sts Safety_Distance_VTH+1,r23
+	sts Safety_Distance_VTH+2,r24
+	sts Safety_Distance_VTH+3,r25
 	movw r26,r24
 	movw r24,r22
 	sts Safety_Distance,r24
 	sts Safety_Distance+1,r25
 	sts Safety_Distance+2,r26
 	sts Safety_Distance+3,r27
-	ldi r18,lo8(102)
-	ldi r19,lo8(102)
-	ldi r20,lo8(102)
-	ldi r21,lo8(64)
-	ldd r22,Y+9
-	ldd r23,Y+10
-	ldd r24,Y+11
-	ldd r25,Y+12
-	call __divsf3
-	movw r18,r22
-	movw r20,r24
+	ldd r18,Y+1
+	ldd r19,Y+2
+	ldd r20,Y+3
+	ldd r21,Y+4
+	movw r24,r20
+	movw r22,r18
 	call __mulsf3
+	movw r8,r22
+	movw r10,r24
+	ldi r18,0
+	ldi r19,0
+	ldi r20,lo8(64)
+	ldi r21,lo8(65)
+	call __divsf3
 	std Y+1,r22
 	std Y+2,r23
 	std Y+3,r24
 	std Y+4,r25
-	ldi r18,0
-	ldi r19,0
-	ldi r20,0
-	ldi r21,lo8(62)
-	call __mulsf3
-	std Y+29,r22
-	std Y+30,r23
-	std Y+31,r24
-	std Y+32,r25
 	sts SafetyDistance_HalfBrake,r22
 	sts SafetyDistance_HalfBrake+1,r23
 	sts SafetyDistance_HalfBrake+2,r24
 	sts SafetyDistance_HalfBrake+3,r25
 	ldi r18,0
 	ldi r19,0
-	ldi r20,lo8(64)
+	ldi r20,lo8(96)
 	ldi r21,lo8(65)
-	ldd r22,Y+1
-	ldd r23,Y+2
-	ldd r24,Y+3
-	ldd r25,Y+4
+	movw r24,r10
+	movw r22,r8
 	call __divsf3
-	std Y+33,r22
-	std Y+34,r23
-	std Y+35,r24
-	std Y+36,r25
+	std Y+9,r22
+	std Y+10,r23
+	std Y+11,r24
+	std Y+12,r25
 	sts SafetyDistance_HalfFullBrake,r22
 	sts SafetyDistance_HalfFullBrake+1,r23
 	sts SafetyDistance_HalfFullBrake+2,r24
@@ -250,15 +321,13 @@ Acc_Dec_Dtrmn_Sys:
 	ldi r19,0
 	ldi r20,lo8(-128)
 	ldi r21,lo8(61)
-	ldd r22,Y+1
-	ldd r23,Y+2
-	ldd r24,Y+3
-	ldd r25,Y+4
+	movw r24,r10
+	movw r22,r8
 	call __mulsf3
-	std Y+25,r22
-	std Y+26,r23
-	std Y+27,r24
-	std Y+28,r25
+	std Y+13,r22
+	std Y+14,r23
+	std Y+15,r24
+	std Y+16,r25
 	sts SafetyDistance_FullBrake,r22
 	sts SafetyDistance_FullBrake+1,r23
 	sts SafetyDistance_FullBrake+2,r24
@@ -267,15 +336,13 @@ Acc_Dec_Dtrmn_Sys:
 	ldi r19,0
 	ldi r20,lo8(-64)
 	ldi r21,lo8(64)
-	ldd r22,Y+1
-	ldd r23,Y+2
-	ldd r24,Y+3
-	ldd r25,Y+4
+	movw r24,r10
+	movw r22,r8
 	call __divsf3
-	std Y+37,r22
-	std Y+38,r23
-	std Y+39,r24
-	std Y+40,r25
+	std Y+17,r22
+	std Y+18,r23
+	std Y+19,r24
+	std Y+20,r25
 	sts SafetyDistance_AccDisabled,r22
 	sts SafetyDistance_AccDisabled+1,r23
 	sts SafetyDistance_AccDisabled+2,r24
@@ -284,15 +351,13 @@ Acc_Dec_Dtrmn_Sys:
 	ldi r19,0
 	ldi r20,lo8(-96)
 	ldi r21,lo8(64)
-	ldd r22,Y+1
-	ldd r23,Y+2
-	ldd r24,Y+3
-	ldd r25,Y+4
+	movw r24,r10
+	movw r22,r8
 	call __divsf3
-	std Y+13,r22
-	std Y+14,r23
-	std Y+15,r24
-	std Y+16,r25
+	std Y+21,r22
+	std Y+22,r23
+	std Y+23,r24
+	std Y+24,r25
 	sts SafetyDistance_AccMin,r22
 	sts SafetyDistance_AccMin+1,r23
 	sts SafetyDistance_AccMin+2,r24
@@ -301,154 +366,162 @@ Acc_Dec_Dtrmn_Sys:
 	ldi r19,0
 	ldi r20,lo8(-128)
 	ldi r21,lo8(62)
-	ldd r22,Y+1
-	ldd r23,Y+2
-	ldd r24,Y+3
-	ldd r25,Y+4
+	movw r24,r10
+	movw r22,r8
 	call __mulsf3
-	std Y+21,r22
-	std Y+22,r23
-	std Y+23,r24
-	std Y+24,r25
+	std Y+25,r22
+	std Y+26,r23
+	std Y+27,r24
+	std Y+28,r25
 	sts SafetyDistance_AccMax,r22
 	sts SafetyDistance_AccMax+1,r23
 	sts SafetyDistance_AccMax+2,r24
 	sts SafetyDistance_AccMax+3,r25
-	lds r12,Relative_Distance
-	lds r13,Relative_Distance+1
-	lds r14,Relative_Distance+2
-	lds r15,Relative_Distance+3
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
+	movw r24,r14
+	movw r22,r12
+	call __nesf2
+	tst r24
+	brne .+2
+	rjmp .L152
 	ldi r18,lo8(102)
 	ldi r19,lo8(102)
 	ldi r20,lo8(102)
 	ldi r21,lo8(64)
-	movw r24,r10
-	movw r22,r8
-	call __divsf3
-	movw r4,r22
-	movw r6,r24
-	movw r18,r22
-	movw r20,r24
 	movw r24,r14
 	movw r22,r12
 	call __divsf3
-	std Y+5,r22
-	std Y+6,r23
-	std Y+7,r24
-	std Y+8,r25
+	movw r8,r22
+	movw r10,r24
+	movw r18,r22
+	movw r20,r24
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+	call __divsf3
 	sts TTC,r22
 	sts TTC+1,r23
 	sts TTC+2,r24
 	sts TTC+3,r25
-	movw r20,r6
-	movw r18,r4
-	ldd r22,Y+29
-	ldd r23,Y+30
-	ldd r24,Y+31
-	ldd r25,Y+32
+	movw r20,r10
+	movw r18,r8
+	ldd r22,Y+1
+	ldd r23,Y+2
+	ldd r24,Y+3
+	ldd r25,Y+4
 	call __divsf3
-	std Y+45,r22
-	std Y+46,r23
-	std Y+47,r24
-	std Y+48,r25
 	sts TTC_HalfBrake,r22
 	sts TTC_HalfBrake+1,r23
 	sts TTC_HalfBrake+2,r24
 	sts TTC_HalfBrake+3,r25
-	movw r20,r6
-	movw r18,r4
-	ldd r22,Y+33
-	ldd r23,Y+34
-	ldd r24,Y+35
-	ldd r25,Y+36
+	movw r20,r10
+	movw r18,r8
+	ldd r22,Y+9
+	ldd r23,Y+10
+	ldd r24,Y+11
+	ldd r25,Y+12
 	call __divsf3
-	std Y+49,r22
-	std Y+50,r23
-	std Y+51,r24
-	std Y+52,r25
 	sts TTC_HalfFullBrake,r22
 	sts TTC_HalfFullBrake+1,r23
 	sts TTC_HalfFullBrake+2,r24
 	sts TTC_HalfFullBrake+3,r25
-	movw r20,r6
-	movw r18,r4
-	ldd r22,Y+25
-	ldd r23,Y+26
-	ldd r24,Y+27
-	ldd r25,Y+28
-	call __divsf3
-	adiw r28,65-60
-	std Y+60,r22
-	std Y+61,r23
-	std Y+62,r24
-	std Y+63,r25
-	sbiw r28,65-60
-	sts TTC_FullBrake,r22
-	sts TTC_FullBrake+1,r23
-	sts TTC_FullBrake+2,r24
-	sts TTC_FullBrake+3,r25
-	movw r20,r6
-	movw r18,r4
-	ldd r22,Y+37
-	ldd r23,Y+38
-	ldd r24,Y+39
-	ldd r25,Y+40
-	call __divsf3
-	std Y+53,r22
-	std Y+54,r23
-	std Y+55,r24
-	std Y+56,r25
-	sts TTC_AccDisabled,r22
-	sts TTC_AccDisabled+1,r23
-	sts TTC_AccDisabled+2,r24
-	sts TTC_AccDisabled+3,r25
-	movw r20,r6
-	movw r18,r4
+	movw r20,r10
+	movw r18,r8
 	ldd r22,Y+13
 	ldd r23,Y+14
 	ldd r24,Y+15
 	ldd r25,Y+16
 	call __divsf3
-	std Y+57,r22
-	std Y+58,r23
-	std Y+59,r24
-	std Y+60,r25
-	sts TTC_AccMin,r22
-	sts TTC_AccMin+1,r23
-	sts TTC_AccMin+2,r24
-	sts TTC_AccMin+3,r25
-	movw r20,r6
-	movw r18,r4
-	ldd r22,Y+21
-	ldd r23,Y+22
-	ldd r24,Y+23
-	ldd r25,Y+24
-	call __divsf3
-	std Y+41,r22
-	std Y+42,r23
-	std Y+43,r24
-	std Y+44,r25
-	sts TTC_AccMax,r22
-	sts TTC_AccMax+1,r23
-	sts TTC_AccMax+2,r24
-	sts TTC_AccMax+3,r25
-	movw r20,r6
-	movw r18,r4
+	sts TTC_FullBrake,r22
+	sts TTC_FullBrake+1,r23
+	sts TTC_FullBrake+2,r24
+	sts TTC_FullBrake+3,r25
+	movw r20,r10
+	movw r18,r8
 	ldd r22,Y+17
 	ldd r23,Y+18
 	ldd r24,Y+19
 	ldd r25,Y+20
 	call __divsf3
-	adiw r28,61-60
-	std Y+60,r22
-	std Y+61,r23
-	std Y+62,r24
-	std Y+63,r25
-	sbiw r28,61-60
+	sts TTC_AccDisabled,r22
+	sts TTC_AccDisabled+1,r23
+	sts TTC_AccDisabled+2,r24
+	sts TTC_AccDisabled+3,r25
+	movw r20,r10
+	movw r18,r8
+	ldd r22,Y+21
+	ldd r23,Y+22
+	ldd r24,Y+23
+	ldd r25,Y+24
+	call __divsf3
+	sts TTC_AccMin,r22
+	sts TTC_AccMin+1,r23
+	sts TTC_AccMin+2,r24
+	sts TTC_AccMin+3,r25
+	movw r20,r10
+	movw r18,r8
+	ldd r22,Y+25
+	ldd r23,Y+26
+	ldd r24,Y+27
+	ldd r25,Y+28
+	call __divsf3
+	sts TTC_AccMax,r22
+	sts TTC_AccMax+1,r23
+	sts TTC_AccMax+2,r24
+	sts TTC_AccMax+3,r25
+	movw r20,r10
+	movw r18,r8
+	ldd r22,Y+5
+	ldd r23,Y+6
+	ldd r24,Y+7
+	ldd r25,Y+8
+	call __divsf3
 	sts TTC_SafetyDistMin,r22
 	sts TTC_SafetyDistMin+1,r23
 	sts TTC_SafetyDistMin+2,r24
 	sts TTC_SafetyDistMin+3,r25
+	rjmp .L30
+.L152:
+	ldi r24,lo8(-1)
+	ldi r25,lo8(-1)
+	ldi r26,lo8(127)
+	ldi r27,lo8(127)
+	sts TTC,r24
+	sts TTC+1,r25
+	sts TTC+2,r26
+	sts TTC+3,r27
+	sts TTC_HalfBrake,r24
+	sts TTC_HalfBrake+1,r25
+	sts TTC_HalfBrake+2,r26
+	sts TTC_HalfBrake+3,r27
+	sts TTC_HalfFullBrake,r24
+	sts TTC_HalfFullBrake+1,r25
+	sts TTC_HalfFullBrake+2,r26
+	sts TTC_HalfFullBrake+3,r27
+	sts TTC_FullBrake,r24
+	sts TTC_FullBrake+1,r25
+	sts TTC_FullBrake+2,r26
+	sts TTC_FullBrake+3,r27
+	sts TTC_AccDisabled,r24
+	sts TTC_AccDisabled+1,r25
+	sts TTC_AccDisabled+2,r26
+	sts TTC_AccDisabled+3,r27
+	sts TTC_AccMin,r24
+	sts TTC_AccMin+1,r25
+	sts TTC_AccMin+2,r26
+	sts TTC_AccMin+3,r27
+	sts TTC_AccMax,r24
+	sts TTC_AccMax+1,r25
+	sts TTC_AccMax+2,r26
+	sts TTC_AccMax+3,r27
+	sts TTC_SafetyDistMin,r24
+	sts TTC_SafetyDistMin+1,r25
+	sts TTC_SafetyDistMin+2,r26
+	sts TTC_SafetyDistMin+3,r27
+.L30:
 	sts Output_Acceleration,__zero_reg__
 	sts Output_Acceleration+1,__zero_reg__
 	sts Output_Acceleration+2,__zero_reg__
@@ -456,44 +529,47 @@ Acc_Dec_Dtrmn_Sys:
 	ldi r18,0
 	ldi r19,0
 	movw r20,r18
-	movw r24,r10
-	movw r22,r8
+	movw r24,r14
+	movw r22,r12
 	call __gtsf2
 	cp __zero_reg__,r24
-	brge .L131
-	adiw r28,65-60
-	ldd r18,Y+60
-	ldd r19,Y+61
-	ldd r20,Y+62
-	ldd r21,Y+63
-	sbiw r28,65-60
-	ldd r22,Y+5
-	ldd r23,Y+6
-	ldd r24,Y+7
-	ldd r25,Y+8
+	brge .L153
+	lds r18,TTC_FullBrake
+	lds r19,TTC_FullBrake+1
+	lds r20,TTC_FullBrake+2
+	lds r21,TTC_FullBrake+3
+	lds r22,TTC
+	lds r23,TTC+1
+	lds r24,TTC+2
+	lds r25,TTC+3
 	call __lesf2
 	cp __zero_reg__,r24
-	brlt .L132
-	rjmp .L28
-.L131:
+	brlt .L154
+	rjmp .L33
+.L153:
 	ldi r18,0
 	ldi r19,0
 	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __ltsf2
-	sbrs r24,7
-	rjmp .L88
-	ldd r18,Y+25
-	ldd r19,Y+26
-	ldd r20,Y+27
-	ldd r21,Y+28
 	movw r24,r14
 	movw r22,r12
 	call __lesf2
 	cp __zero_reg__,r24
-	brlt .L102
-.L28:
+	brge .+2
+	rjmp .L102
+.L115:
+	lds r18,SafetyDistance_FullBrake
+	lds r19,SafetyDistance_FullBrake+1
+	lds r20,SafetyDistance_FullBrake+2
+	lds r21,SafetyDistance_FullBrake+3
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+	call __lesf2
+	cp __zero_reg__,r24
+	brge .+2
+	rjmp .L156
+.L33:
 	ldi r24,0
 	ldi r25,0
 	ldi r26,0
@@ -502,234 +578,232 @@ Acc_Dec_Dtrmn_Sys:
 	sts Output_Acceleration+1,r25
 	sts Output_Acceleration+2,r26
 	sts Output_Acceleration+3,r27
-	rjmp .L158
-.L132:
+	rjmp .L183
+.L154:
 	ldi r18,0
 	ldi r19,0
 	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __ltsf2
-	sbrc r24,7
-	rjmp .L159
-.L101:
-	ldd r18,Y+49
-	ldd r19,Y+50
-	ldd r20,Y+51
-	ldd r21,Y+52
-	ldd r22,Y+5
-	ldd r23,Y+6
-	ldd r24,Y+7
-	ldd r25,Y+8
-	call __lesf2
-	cp __zero_reg__,r24
-	brge .L37
-	ldi r18,0
-	ldi r19,0
-	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __ltsf2
-	sbrs r24,7
-	rjmp .L103
-.L102:
-	ldd r18,Y+33
-	ldd r19,Y+34
-	ldd r20,Y+35
-	ldd r21,Y+36
 	movw r24,r14
 	movw r22,r12
 	call __lesf2
 	cp __zero_reg__,r24
-	brlt .L136
-.L37:
-	movw r20,r14
-	movw r18,r12
-	movw r24,r14
-	movw r22,r12
+	brge .L115
+.L116:
+	lds r18,TTC_HalfFullBrake
+	lds r19,TTC_HalfFullBrake+1
+	lds r20,TTC_HalfFullBrake+2
+	lds r21,TTC_HalfFullBrake+3
+	lds r22,TTC
+	lds r23,TTC+1
+	lds r24,TTC+2
+	lds r25,TTC+3
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .L157
+.L42:
+	ldi r18,lo8(102)
+	ldi r19,lo8(102)
+	ldi r20,lo8(102)
+	ldi r21,lo8(64)
+	lds r22,Vehicle_Speed
+	lds r23,Vehicle_Speed+1
+	lds r24,Vehicle_Speed+2
+	lds r25,Vehicle_Speed+3
+	call __divsf3
+	movw r18,r22
+	movw r20,r24
+	call __mulsf3
+	movw r12,r22
+	movw r14,r24
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+	movw r18,r22
+	movw r20,r24
 	call __addsf3
 	movw r18,r22
 	movw r20,r24
-	ldd r22,Y+1
-	ldd r23,Y+2
-	ldd r24,Y+3
-	ldd r25,Y+4
+	movw r24,r14
+	movw r22,r12
 	call __divsf3
 	sts Output_Acceleration,r22
 	sts Output_Acceleration+1,r23
 	sts Output_Acceleration+2,r24
 	sts Output_Acceleration+3,r25
-.L158:
+.L183:
 	ldi r24,lo8(1)
 	ldi r25,0
-	rjmp .L153
-.L136:
+	rjmp .L178
+.L157:
 	ldi r18,0
 	ldi r19,0
 	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __gtsf2
-	cp __zero_reg__,r24
-	brlt .+2
-	rjmp .L104
-.L103:
-	ldd r18,Y+45
-	ldd r19,Y+46
-	ldd r20,Y+47
-	ldd r21,Y+48
-	ldd r22,Y+5
-	ldd r23,Y+6
-	ldd r24,Y+7
-	ldd r25,Y+8
-	call __lesf2
-	cp __zero_reg__,r24
-	brlt .+2
-	rjmp .L45
-	ldi r18,0
-	ldi r19,0
-	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __ltsf2
-	sbrc r24,7
-	rjmp .L104
-.L105:
-	adiw r28,61-60
-	ldd r18,Y+60
-	ldd r19,Y+61
-	ldd r20,Y+62
-	ldd r21,Y+63
-	sbiw r28,61-60
-	ldd r22,Y+5
-	ldd r23,Y+6
-	ldd r24,Y+7
-	ldd r25,Y+8
-	call __lesf2
-	cp __zero_reg__,r24
-	brlt .+2
-	rjmp .L53
-	ldi r18,0
-	ldi r19,0
-	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __ltsf2
-	sbrc r24,7
-	rjmp .L106
-.L107:
-	ldd r18,Y+53
-	ldd r19,Y+54
-	ldd r20,Y+55
-	ldd r21,Y+56
-	ldd r22,Y+5
-	ldd r23,Y+6
-	ldd r24,Y+7
-	ldd r25,Y+8
-	call __lesf2
-	cp __zero_reg__,r24
-	brlt .+2
-	rjmp .L61
-	ldi r18,0
-	ldi r19,0
-	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __ltsf2
-	sbrc r24,7
-	rjmp .L108
-.L109:
-	ldd r18,Y+57
-	ldd r19,Y+58
-	ldd r20,Y+59
-	ldd r21,Y+60
-	ldd r22,Y+5
-	ldd r23,Y+6
-	ldd r24,Y+7
-	ldd r25,Y+8
-	call __lesf2
-	cp __zero_reg__,r24
-	brlt .+2
-	rjmp .L69
-	ldi r18,0
-	ldi r19,0
-	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __ltsf2
-	sbrc r24,7
-	rjmp .L110
-.L111:
-	ldd r18,Y+41
-	ldd r19,Y+42
-	ldd r20,Y+43
-	ldd r21,Y+44
-	ldd r22,Y+5
-	ldd r23,Y+6
-	ldd r24,Y+7
-	ldd r25,Y+8
-	call __lesf2
-	cp __zero_reg__,r24
-	brlt .+2
-	rjmp .L79
-	ldi r18,0
-	ldi r19,0
-	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __ltsf2
-	sbrc r24,7
-	rjmp .L112
-.L113:
-	ldd r18,Y+41
-	ldd r19,Y+42
-	ldd r20,Y+43
-	ldd r21,Y+44
-	ldd r22,Y+5
-	ldd r23,Y+6
-	ldd r24,Y+7
-	ldd r25,Y+8
-	call __gtsf2
-	cp __zero_reg__,r24
-	brlt .L90
-.L88:
-	ldi r18,0
-	ldi r19,0
-	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __ltsf2
-	sbrs r24,7
-	rjmp .L34
-.L115:
-	ldd r18,Y+21
-	ldd r19,Y+22
-	ldd r20,Y+23
-	ldd r21,Y+24
 	movw r24,r14
 	movw r22,r12
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L117
+.L118:
+	lds r18,TTC_HalfBrake
+	lds r19,TTC_HalfBrake+1
+	lds r20,TTC_HalfBrake+2
+	lds r21,TTC_HalfBrake+3
+	lds r22,TTC
+	lds r23,TTC+1
+	lds r24,TTC+2
+	lds r25,TTC+3
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L50
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
+	movw r24,r14
+	movw r22,r12
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L119
+.L120:
+	lds r18,TTC_SafetyDistMin
+	lds r19,TTC_SafetyDistMin+1
+	lds r20,TTC_SafetyDistMin+2
+	lds r21,TTC_SafetyDistMin+3
+	lds r22,TTC
+	lds r23,TTC+1
+	lds r24,TTC+2
+	lds r25,TTC+3
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L58
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
+	movw r24,r14
+	movw r22,r12
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L121
+.L122:
+	lds r18,TTC_AccDisabled
+	lds r19,TTC_AccDisabled+1
+	lds r20,TTC_AccDisabled+2
+	lds r21,TTC_AccDisabled+3
+	lds r22,TTC
+	lds r23,TTC+1
+	lds r24,TTC+2
+	lds r25,TTC+3
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L66
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
+	movw r24,r14
+	movw r22,r12
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L123
+.L124:
+	lds r18,TTC_AccMin
+	lds r19,TTC_AccMin+1
+	lds r20,TTC_AccMin+2
+	lds r21,TTC_AccMin+3
+	lds r22,TTC
+	lds r23,TTC+1
+	lds r24,TTC+2
+	lds r25,TTC+3
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L74
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
+	movw r24,r14
+	movw r22,r12
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L125
+.L126:
+	lds r18,TTC_AccMax
+	lds r19,TTC_AccMax+1
+	lds r20,TTC_AccMax+2
+	lds r21,TTC_AccMax+3
+	lds r22,TTC
+	lds r23,TTC+1
+	lds r24,TTC+2
+	lds r25,TTC+3
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L84
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
+	movw r24,r14
+	movw r22,r12
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .+2
+	rjmp .L127
+.L128:
+	lds r18,TTC_AccMax
+	lds r19,TTC_AccMax+1
+	lds r20,TTC_AccMax+2
+	lds r21,TTC_AccMax+3
+	lds r22,TTC
+	lds r23,TTC+1
+	lds r24,TTC+2
+	lds r25,TTC+3
+	call __gtsf2
+	cp __zero_reg__,r24
+	brlt .L104
+.L102:
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
+	movw r24,r14
+	movw r22,r12
+	call __lesf2
+	cp __zero_reg__,r24
+	brge .+2
+	rjmp .L39
+.L129:
+	lds r18,SafetyDistance_AccMax
+	lds r19,SafetyDistance_AccMax+1
+	lds r20,SafetyDistance_AccMax+2
+	lds r21,SafetyDistance_AccMax+3
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
 	call __gtsf2
 	cp __zero_reg__,r24
 	brlt .+2
-	rjmp .L34
-.L90:
+	rjmp .L39
+.L104:
 	lds r12,Speed_SetbyDriver
 	lds r13,Speed_SetbyDriver+1
 	lds r14,Speed_SetbyDriver+2
 	lds r15,Speed_SetbyDriver+3
-	ldd r18,Y+9
-	ldd r19,Y+10
-	ldd r20,Y+11
-	ldd r21,Y+12
+	movw r20,r6
+	movw r18,r4
 	movw r24,r14
 	movw r22,r12
 	call __gtsf2
-	ldd r18,Y+9
-	ldd r19,Y+10
-	ldd r20,Y+11
-	ldd r21,Y+12
+	movw r20,r6
+	movw r18,r4
 	cp __zero_reg__,r24
-	brge .L147
+	brge .L172
 	movw r24,r14
 	movw r22,r12
 	call __subsf3
@@ -741,7 +815,7 @@ Acc_Dec_Dtrmn_Sys:
 	ldi r21,lo8(64)
 	call __gtsf2
 	cp __zero_reg__,r24
-	brge .L148
+	brge .L173
 	ldi r24,0
 	ldi r25,0
 	ldi r26,lo8(64)
@@ -750,72 +824,82 @@ Acc_Dec_Dtrmn_Sys:
 	sts Output_Acceleration+1,r25
 	sts Output_Acceleration+2,r26
 	sts Output_Acceleration+3,r27
-	rjmp .L155
-.L148:
+	rjmp .L187
+.L173:
 	sts Output_Acceleration,r12
 	sts Output_Acceleration+1,r13
 	sts Output_Acceleration+2,r14
 	sts Output_Acceleration+3,r15
-.L155:
+.L187:
 	ldi r24,lo8(5)
 	ldi r25,0
-.L157:
+.L186:
 	sts Status_Accel_Decel+1,r25
 	sts Status_Accel_Decel,r24
 	ldi r24,lo8(1)
 	ldi r25,0
-.L156:
-	sts Status_Dec_Inc+1,r25
-	sts Status_Dec_Inc,r24
-	rjmp .L34
-.L147:
+	rjmp .L180
+.L172:
 	movw r24,r14
 	movw r22,r12
 	call __ltsf2
 	sbrs r24,7
-	rjmp .L34
-	movw r20,r14
-	movw r18,r12
-	ldd r22,Y+9
-	ldd r23,Y+10
-	ldd r24,Y+11
-	ldd r25,Y+12
+	rjmp .L174
+	movw r20,r6
+	movw r18,r4
+	movw r24,r14
+	movw r22,r12
 	call __subsf3
-	movw r12,r22
-	movw r14,r24
 	ldi r18,0
 	ldi r19,0
 	ldi r20,lo8(64)
 	ldi r21,lo8(-64)
-	call __gtsf2
-	cp __zero_reg__,r24
-	brge .L149
+	call __ltsf2
+	sbrs r24,7
+	rjmp .L175
 	ldi r24,0
 	ldi r25,0
 	ldi r26,lo8(64)
-	ldi r27,lo8(-64)
+	ldi r27,lo8(64)
 	sts Output_Acceleration,r24
 	sts Output_Acceleration+1,r25
 	sts Output_Acceleration+2,r26
 	sts Output_Acceleration+3,r27
-	rjmp .L154
-.L149:
-	sts Output_Acceleration,r12
-	sts Output_Acceleration+1,r13
-	sts Output_Acceleration+2,r14
-	sts Output_Acceleration+3,r15
-.L154:
+.L179:
 	ldi r24,lo8(5)
 	ldi r25,0
-.L153:
+.L178:
 	sts Status_Accel_Decel+1,r25
 	sts Status_Accel_Decel,r24
 	sts Status_Dec_Inc+1,__zero_reg__
 	sts Status_Dec_Inc,__zero_reg__
-.L34:
+	rjmp .L39
+.L175:
+	movw r20,r14
+	movw r18,r12
+	movw r24,r6
+	movw r22,r4
+	call __subsf3
+	sts Output_Acceleration,r22
+	sts Output_Acceleration+1,r23
+	sts Output_Acceleration+2,r24
+	sts Output_Acceleration+3,r25
+	rjmp .L179
+.L174:
+	ldi r24,lo8(5)
+	ldi r25,0
+.L182:
+	sts Status_Accel_Decel+1,r25
+	sts Status_Accel_Decel,r24
+.L181:
+	ldi r24,lo8(2)
+	ldi r25,0
+.L180:
+	sts Status_Dec_Inc+1,r25
+	sts Status_Dec_Inc,r24
+.L39:
 /* epilogue start */
-	subi r28,-68
-	sbci r29,-1
+	adiw r28,28
 	in __tmp_reg__,__SREG__
 	cli
 	out __SP_H__,r29
@@ -848,8 +932,7 @@ Acc_Dec_Dtrmn_Sys:
 	sts Status_Dec_Inc+1,r25
 	sts Status_Dec_Inc,r24
 /* epilogue start */
-	subi r28,-68
-	sbci r29,-1
+	adiw r28,28
 	in __tmp_reg__,__SREG__
 	cli
 	out __SP_H__,r29
@@ -870,28 +953,76 @@ Acc_Dec_Dtrmn_Sys:
 	pop r5
 	pop r4
 	ret
-.L104:
-	ldd r18,Y+29
-	ldd r19,Y+30
-	ldd r20,Y+31
-	ldd r21,Y+32
+.L156:
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
 	movw r24,r14
 	movw r22,r12
+	call __gtsf2
+	cp __zero_reg__,r24
+	brge .+2
+	rjmp .L116
+.L117:
+	lds r18,SafetyDistance_HalfFullBrake
+	lds r19,SafetyDistance_HalfFullBrake+1
+	lds r20,SafetyDistance_HalfFullBrake+2
+	lds r21,SafetyDistance_HalfFullBrake+3
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
 	call __lesf2
 	cp __zero_reg__,r24
-	brlt .L138
-.L45:
-	movw r20,r14
-	movw r18,r12
+	brlt .+2
+	rjmp .L42
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
 	movw r24,r14
 	movw r22,r12
+	call __gtsf2
+	cp __zero_reg__,r24
+	brge .+2
+	rjmp .L118
+.L119:
+	lds r18,SafetyDistance_HalfBrake
+	lds r19,SafetyDistance_HalfBrake+1
+	lds r20,SafetyDistance_HalfBrake+2
+	lds r21,SafetyDistance_HalfBrake+3
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+	call __lesf2
+	cp __zero_reg__,r24
+	brlt .L160
+.L50:
+	ldi r18,lo8(102)
+	ldi r19,lo8(102)
+	ldi r20,lo8(102)
+	ldi r21,lo8(64)
+	lds r22,Vehicle_Speed
+	lds r23,Vehicle_Speed+1
+	lds r24,Vehicle_Speed+2
+	lds r25,Vehicle_Speed+3
+	call __divsf3
+	movw r18,r22
+	movw r20,r24
+	call __mulsf3
+	movw r12,r22
+	movw r14,r24
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+	movw r18,r22
+	movw r20,r24
 	call __addsf3
 	movw r18,r22
 	movw r20,r24
-	ldd r22,Y+1
-	ldd r23,Y+2
-	ldd r24,Y+3
-	ldd r25,Y+4
+	movw r24,r14
+	movw r22,r12
 	call __divsf3
 	sts Output_Acceleration,r22
 	sts Output_Acceleration+1,r23
@@ -899,39 +1030,55 @@ Acc_Dec_Dtrmn_Sys:
 	sts Output_Acceleration+3,r25
 	ldi r24,lo8(2)
 	ldi r25,0
-	rjmp .L153
-.L138:
+	rjmp .L178
+.L160:
 	ldi r18,0
 	ldi r19,0
 	movw r20,r18
-	movw r24,r10
-	movw r22,r8
+	movw r24,r14
+	movw r22,r12
 	call __gtsf2
 	cp __zero_reg__,r24
 	brge .+2
-	rjmp .L105
-.L106:
-	ldd r18,Y+17
-	ldd r19,Y+18
-	ldd r20,Y+19
-	ldd r21,Y+20
-	movw r24,r14
-	movw r22,r12
+	rjmp .L120
+.L121:
+	lds r18,Safety_Distance
+	lds r19,Safety_Distance+1
+	lds r20,Safety_Distance+2
+	lds r21,Safety_Distance+3
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
 	call __lesf2
 	cp __zero_reg__,r24
-	brlt .L140
-.L53:
-	movw r20,r14
-	movw r18,r12
-	movw r24,r14
-	movw r22,r12
+	brlt .L162
+.L58:
+	ldi r18,lo8(102)
+	ldi r19,lo8(102)
+	ldi r20,lo8(102)
+	ldi r21,lo8(64)
+	lds r22,Vehicle_Speed
+	lds r23,Vehicle_Speed+1
+	lds r24,Vehicle_Speed+2
+	lds r25,Vehicle_Speed+3
+	call __divsf3
+	movw r18,r22
+	movw r20,r24
+	call __mulsf3
+	movw r12,r22
+	movw r14,r24
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+	movw r18,r22
+	movw r20,r24
 	call __addsf3
 	movw r18,r22
 	movw r20,r24
-	ldd r22,Y+1
-	ldd r23,Y+2
-	ldd r24,Y+3
-	ldd r25,Y+4
+	movw r24,r14
+	movw r22,r12
 	call __divsf3
 	sts Output_Acceleration,r22
 	sts Output_Acceleration+1,r23
@@ -939,66 +1086,83 @@ Acc_Dec_Dtrmn_Sys:
 	sts Output_Acceleration+3,r25
 	ldi r24,lo8(3)
 	ldi r25,0
-	rjmp .L153
-.L140:
+	rjmp .L178
+.L162:
 	ldi r18,0
 	ldi r19,0
 	movw r20,r18
-	movw r24,r10
-	movw r22,r8
+	movw r24,r14
+	movw r22,r12
 	call __gtsf2
 	cp __zero_reg__,r24
 	brge .+2
-	rjmp .L107
-.L108:
-	ldd r18,Y+37
-	ldd r19,Y+38
-	ldd r20,Y+39
-	ldd r21,Y+40
-	movw r24,r14
-	movw r22,r12
+	rjmp .L122
+.L123:
+	lds r18,SafetyDistance_AccDisabled
+	lds r19,SafetyDistance_AccDisabled+1
+	lds r20,SafetyDistance_AccDisabled+2
+	lds r21,SafetyDistance_AccDisabled+3
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
 	call __lesf2
 	cp __zero_reg__,r24
-	brlt .L142
-.L61:
+	brlt .L164
+.L66:
 	sts Status_Accel_Decel+1,__zero_reg__
 	sts Status_Accel_Decel,__zero_reg__
-	ldi r24,lo8(2)
-	ldi r25,0
-	rjmp .L156
-.L142:
+	rjmp .L181
+.L164:
 	ldi r18,0
 	ldi r19,0
 	movw r20,r18
-	movw r24,r10
-	movw r22,r8
+	movw r24,r14
+	movw r22,r12
 	call __gtsf2
 	cp __zero_reg__,r24
 	brge .+2
-	rjmp .L109
-.L110:
-	ldd r18,Y+13
-	ldd r19,Y+14
-	ldd r20,Y+15
-	ldd r21,Y+16
-	movw r24,r14
-	movw r22,r12
+	rjmp .L124
+.L125:
+	lds r18,SafetyDistance_AccMin
+	lds r19,SafetyDistance_AccMin+1
+	lds r20,SafetyDistance_AccMin+2
+	lds r21,SafetyDistance_AccMin+3
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
 	call __lesf2
 	cp __zero_reg__,r24
-	brlt .L144
-.L69:
-	movw r20,r14
-	movw r18,r12
-	movw r24,r14
-	movw r22,r12
+	brge .+2
+	rjmp .L166
+.L74:
+	ldi r18,lo8(102)
+	ldi r19,lo8(102)
+	ldi r20,lo8(102)
+	ldi r21,lo8(64)
+	lds r22,Vehicle_Speed
+	lds r23,Vehicle_Speed+1
+	lds r24,Vehicle_Speed+2
+	lds r25,Vehicle_Speed+3
+	call __divsf3
+	movw r18,r22
+	movw r20,r24
+	call __mulsf3
+	movw r12,r22
+	movw r14,r24
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+.L177:
+	movw r18,r22
+	movw r20,r24
 	call __addsf3
 	movw r18,r22
 	movw r20,r24
-	ldd r22,Y+1
-	ldd r23,Y+2
-	ldd r24,Y+3
-	ldd r25,Y+4
-.L152:
+	movw r24,r14
+	movw r22,r12
 	call __divsf3
 	sts Output_Acceleration,r22
 	sts Output_Acceleration+1,r23
@@ -1010,7 +1174,9 @@ Acc_Dec_Dtrmn_Sys:
 	ldi r21,lo8(64)
 	call __gtsf2
 	cp __zero_reg__,r24
-	brge .L76
+	brlt .+2
+	rjmp .L185
+.L184:
 	ldi r24,0
 	ldi r25,0
 	ldi r26,lo8(64)
@@ -1019,84 +1185,149 @@ Acc_Dec_Dtrmn_Sys:
 	sts Output_Acceleration+1,r25
 	sts Output_Acceleration+2,r26
 	sts Output_Acceleration+3,r27
-.L76:
+	rjmp .L185
+.L166:
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
+	movw r24,r14
+	movw r22,r12
+	call __gtsf2
+	cp __zero_reg__,r24
+	brge .+2
+	rjmp .L126
+.L127:
+	lds r24,Relative_Distance
+	lds r25,Relative_Distance+1
+	lds r26,Relative_Distance+2
+	lds r27,Relative_Distance+3
+	std Y+1,r24
+	std Y+2,r25
+	std Y+3,r26
+	std Y+4,r27
+	lds r18,SafetyDistance_AccMax
+	lds r19,SafetyDistance_AccMax+1
+	lds r20,SafetyDistance_AccMax+2
+	lds r21,SafetyDistance_AccMax+3
+	movw r22,r24
+	movw r24,r26
+	call __lesf2
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
+	cp __zero_reg__,r24
+	brge .+2
+	rjmp .L168
+	movw r24,r14
+	movw r22,r12
+	call __gtsf2
+	cp __zero_reg__,r24
+	brge .+2
+	rjmp .L84
+	ldi r18,0
+	ldi r19,0
+	movw r20,r18
+	movw r24,r14
+	movw r22,r12
+	call __ltsf2
+	sbrs r24,7
+	rjmp .L93
+	lds r8,Speed_SetbyDriver
+	lds r9,Speed_SetbyDriver+1
+	lds r10,Speed_SetbyDriver+2
+	lds r11,Speed_SetbyDriver+3
+	movw r20,r6
+	movw r18,r4
+	movw r24,r10
+	movw r22,r8
+	call __gtsf2
+	cp __zero_reg__,r24
+	brge .+2
+	rjmp .L188
+	movw r20,r6
+	movw r18,r4
+	movw r24,r10
+	movw r22,r8
+	call __ltsf2
+	sbrs r24,7
+	rjmp .L93
+	movw r20,r6
+	movw r18,r4
+	movw r24,r10
+	movw r22,r8
+	call __subsf3
+	ldi r18,0
+	ldi r19,0
+	ldi r20,lo8(64)
+	ldi r21,lo8(-64)
+	call __ltsf2
+	sbrc r24,7
+	rjmp .L184
+	movw r20,r10
+	movw r18,r8
+	movw r24,r6
+	movw r22,r4
+	call __subsf3
+	sts Output_Acceleration,r22
+	sts Output_Acceleration+1,r23
+	sts Output_Acceleration+2,r24
+	sts Output_Acceleration+3,r25
+.L185:
 	ldi r24,lo8(4)
 	ldi r25,0
-	rjmp .L153
-.L144:
-	ldi r18,0
-	ldi r19,0
-	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __gtsf2
-	cp __zero_reg__,r24
-	brge .+2
-	rjmp .L111
-.L112:
-	ldd r18,Y+21
-	ldd r19,Y+22
-	ldd r20,Y+23
-	ldd r21,Y+24
+	rjmp .L178
+.L84:
+	ldi r18,lo8(102)
+	ldi r19,lo8(102)
+	ldi r20,lo8(102)
+	ldi r21,lo8(64)
 	movw r24,r14
 	movw r22,r12
-	call __lesf2
-	cp __zero_reg__,r24
-	brge .+2
-	rjmp .L160
-	ldi r18,0
-	ldi r19,0
-	movw r20,r18
-	movw r24,r10
-	movw r22,r8
-	call __gtsf2
-	cp __zero_reg__,r24
-	brge .L151
-.L79:
-	movw r20,r6
-	movw r18,r4
-	movw r24,r6
-	movw r22,r4
+	call __divsf3
+	movw r18,r22
+	movw r20,r24
 	call __mulsf3
-	movw r8,r22
-	movw r10,r24
-	ldd r18,Y+13
-	ldd r19,Y+14
-	ldd r20,Y+15
-	ldd r21,Y+16
+	movw r12,r22
+	movw r14,r24
+	lds r18,SafetyDistance_AccMin
+	lds r19,SafetyDistance_AccMin+1
+	lds r20,SafetyDistance_AccMin+2
+	lds r21,SafetyDistance_AccMin+3
+	lds r22,Relative_Distance
+	lds r23,Relative_Distance+1
+	lds r24,Relative_Distance+2
+	lds r25,Relative_Distance+3
+	call __subsf3
+	rjmp .L177
+.L188:
+	ldi r18,lo8(102)
+	ldi r19,lo8(102)
+	ldi r20,lo8(102)
+	ldi r21,lo8(64)
 	movw r24,r14
 	movw r22,r12
+	call __divsf3
+	movw r18,r22
+	movw r20,r24
+	call __mulsf3
+	movw r12,r22
+	movw r14,r24
+	lds r18,SafetyDistance_AccMin
+	lds r19,SafetyDistance_AccMin+1
+	lds r20,SafetyDistance_AccMin+2
+	lds r21,SafetyDistance_AccMin+3
+	ldd r22,Y+1
+	ldd r23,Y+2
+	ldd r24,Y+3
+	ldd r25,Y+4
 	call __subsf3
 	movw r18,r22
 	movw r20,r24
 	call __addsf3
 	movw r18,r22
 	movw r20,r24
-	movw r24,r10
-	movw r22,r8
-	rjmp .L152
-.L151:
-	movw r20,r6
-	movw r18,r4
-	movw r24,r6
-	movw r22,r4
-	call __mulsf3
-	movw r8,r22
-	movw r10,r24
-	ldd r18,Y+13
-	ldd r19,Y+14
-	ldd r20,Y+15
-	ldd r21,Y+16
 	movw r24,r14
 	movw r22,r12
-	call __subsf3
-	movw r18,r22
-	movw r20,r24
-	call __addsf3
-	movw r18,r22
-	movw r20,r24
-	movw r24,r10
-	movw r22,r8
 	call __divsf3
 	movw r12,r22
 	movw r14,r24
@@ -1106,13 +1337,13 @@ Acc_Dec_Dtrmn_Sys:
 	ldi r21,lo8(64)
 	call __gtsf2
 	cp __zero_reg__,r24
-	brlt .L86
+	brlt .L97
 	sts Output_Acceleration,r12
 	sts Output_Acceleration+1,r13
 	sts Output_Acceleration+2,r14
 	sts Output_Acceleration+3,r15
-	rjmp .L87
-.L86:
+	rjmp .L98
+.L97:
 	ldi r24,0
 	ldi r25,0
 	ldi r26,lo8(64)
@@ -1121,33 +1352,22 @@ Acc_Dec_Dtrmn_Sys:
 	sts Output_Acceleration+1,r25
 	sts Output_Acceleration+2,r26
 	sts Output_Acceleration+3,r27
-.L87:
+.L98:
 	ldi r24,lo8(4)
 	ldi r25,0
-	rjmp .L157
-.L160:
-	ldi r18,0
-	ldi r19,0
-	movw r20,r18
-	movw r24,r10
-	movw r22,r8
+	rjmp .L186
+.L93:
+	ldi r24,lo8(4)
+	ldi r25,0
+	rjmp .L182
+.L168:
+	movw r24,r14
+	movw r22,r12
 	call __gtsf2
 	cp __zero_reg__,r24
 	brge .+2
-	rjmp .L113
-	rjmp .L115
-.L159:
-	ldd r18,Y+25
-	ldd r19,Y+26
-	ldd r20,Y+27
-	ldd r21,Y+28
-	movw r24,r14
-	movw r22,r12
-	call __lesf2
-	cp __zero_reg__,r24
-	brge .+2
-	rjmp .L101
-	rjmp .L28
+	rjmp .L128
+	rjmp .L129
 	.size	Acc_Dec_Dtrmn_Sys, .-Acc_Dec_Dtrmn_Sys
 	.section	.bss.SafetyDistance_AccMax,"aw",@nobits
 	.type	SafetyDistance_AccMax, @object
@@ -1219,10 +1439,10 @@ TTC_HalfBrake:
 	.size	TTC, 4
 TTC:
 	.zero	4
-	.section	.bss.Safety_Distance_Regulation,"aw",@nobits
-	.type	Safety_Distance_Regulation, @object
-	.size	Safety_Distance_Regulation, 4
-Safety_Distance_Regulation:
+	.section	.bss.Safety_Distance_VTH,"aw",@nobits
+	.type	Safety_Distance_VTH, @object
+	.size	Safety_Distance_VTH, 4
+Safety_Distance_VTH:
 	.zero	4
 	.section	.bss.Target_Veh_Accel,"aw",@nobits
 	.type	Target_Veh_Accel, @object

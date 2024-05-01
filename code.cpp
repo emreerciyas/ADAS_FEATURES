@@ -53,7 +53,7 @@
 
 /* Arduino SDK. */
 #include "Arduino.h"
-
+#include "config.h"
 
 /*
  * Pin 13 has an LED connected on most Arduino boards.
@@ -115,7 +115,7 @@ TaskType isr2_clock_id;
 
 extern SemType V;
 
-#define	TIMER1_US  1000000
+#define	TIMER1_US  100000
 
 void StartupHook(void)
 {
@@ -166,7 +166,6 @@ void setup(void)
 {
   /* initialize the digital pin as an output. */
   pinMode(led, OUTPUT);
-
   Serial.begin(115200);
 }
 
@@ -227,6 +226,10 @@ int main(void)
 }
 
 
+/*************************************************************************************/
+/* global variable*/
+char output_char[31];
+/*************************************************************************************/
 
 /*
  * TASK 1
@@ -236,29 +239,73 @@ int main(void)
 TASK(Task1)
 {
 
-  //serial_print("\n TASK1\r\n");
-/*    Temporary code part to test algorithms
- *    When input signals are ready these part will be removed
-*/
+	task1_fired++;
 
-/********************************************************************************/
+#if ACTIVE_TEST_SESSION == TEST_WITH_INTERNAL_VARIABLE
 
-  static uint16_t counter = 1;
-  /********************************************************************************/
-  task1_fired++;
-Calc_Relative_Speed(Relative_Distance);
-Acc_Dec_Dtrmn_Sys();
+	Run_Test_with_Internal_Variable();
+
+#endif
+
+#if ACTIVE_TEST_SESSION == TEST_WITH_EXTERNAL_VARIABLE
+/*
+ * This part will be available for communication with python, it will be under macro for
+ * TEST_WITH_EXTERNAL_VARIABLE
+	int val = 0;
+	val = analogRead(analogPin);  // read the input pin
+
+	char output_char[20]={0};
+	int i=0;
+	  while (!Serial.available()) {} // wait for data to arrive
+	  // serial read section
+	  while (Serial.available() >0)
+	  {
+		  delay(30);  //delay to allow buffer to fill
+		  char x;
+		  x  = Serial.read();
+		  output_char[i]=x;
+		  i++;
+	  }
+
+Serial.print(output_char);*/
+
+#endif
+
+	Process_Input();
+
+
+	if (Vehicle_Speed < VEHICLE_SPEED_MIN)
+	{
+		serial_print("Car has stopped !!!!!!\r\n");
+	}
+	else if((Vehicle_Speed >= VEHICLE_SPEED_MIN) && (Relative_Distance <= RELATIVE_DIST_MIN))
+	{
+		serial_print("Car has crashed !!!!!!\r\n");
+	}
+
+	else
+	{
+		Calc_Relative_Speed( Relative_Distance);
+		Acc_Dec_Dtrmn_Sys();
+		Process_Output();
+		Serial.print(output_char);
+		Serial.print("\r\n");
+	}
+
+
+/*Calc_Relative_Speed(Relative_Distance);
+Acc_Dec_Dtrmn_Sys();*/
 
 /*    Temporary code part to test algorithms
  *    When input signals are ready these part will be removed
  */
 /********************************************************************************/
-Relative_Distance = Relative_Distance - (counter*0.1)/3.6;
-counter++;
+/*Relative_Distance = Relative_Distance - (counter*0.1)/3.6;
+counter++; */
 /********************************************************************************/
  // serial_print("\r\n Release TASK1 \r\n");
 
-  ActivateTask(Task2);
+ /* ActivateTask(Task2);*/
   task1_ended++;
 }
 
@@ -268,73 +315,18 @@ counter++;
 TASK(Task2)
 {
 
-  static int result=0;
-  static int result2=0;
-  //serial_print("TASK2\r\n");
-
-
-  task2_fired++;
-
-  result = (int)(Output_Acceleration *100);
-
-  char str[10];
-  snprintf(str, sizeof(str), "%d", result);
-  Serial.print(str);
-  Serial.print("\r\n");
-
-  result2= (Status_Accel_Decel);
-
-  char str2[10];
-  snprintf(str2, sizeof(str2), "%d", result2);
-  Serial.print(str2);
-  Serial.print("\r\n");
-
-
-  int result3= (int)(Status_Dec_Inc);
-  char str3[10];
-  snprintf(str3, sizeof(str3), "%d", result3);
-  Serial.print(str3);
-  Serial.print("\r\n");
-
-
-  int result4= (int)(Relative_Distance *100);
-  char str4[10];
-  snprintf(str4, sizeof(str4), "%d", result4);
-  Serial.print(str4);
-  Serial.print("\r\n\r\n");
-  /*
-
-  int result5= (int)(TTC_HalfFullBrake*100);
-  char str5[10];
-  snprintf(str5, sizeof(str5), "%d", result5);
-  Serial.print(str5);
-  Serial.print("\r\n");
-  */
-
-  task2_ended++;
 }
 
 TASK(Task3) {
-  serial_print("TASK3\r\n");
 
-  ++task3_fired;
-
-  ActivateTask(Task4);
-
-  ++task3_ended;
 }
 
 TASK(Task4) {
-  serial_print("TASK4\r\n");
 
-  ++task4_fired;
-  ActivateTask(Task5);
 
 }
 
 TASK(Task5) {
-  serial_print("TASK5\r\n");
 
-  ++task5_fired;
 }
 
