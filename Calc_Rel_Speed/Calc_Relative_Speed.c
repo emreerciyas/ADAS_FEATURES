@@ -13,6 +13,7 @@
 
  static float Relative_Distance_Prev = 0.f;
  float Relative_Speed = 0.f;
+ float Relative_Speed_ms = 0.f;
  static boolean skip_first_crs = false;
 
 /*
@@ -42,6 +43,7 @@ void Calc_Relative_Speed(float Relative_Distance)
 	   * MS_TO_KMH is the constant to convert speed unit from m/s to km/h
 	   */
 	  Relative_Speed = ((Relative_Distance_Prev - Relative_Distance) / TIMER_PARAM ) *MS_TO_KMH;
+	  Relative_Speed_ms = ((Relative_Distance_Prev - Relative_Distance) / TIMER_PARAM );
 
   }
   /*

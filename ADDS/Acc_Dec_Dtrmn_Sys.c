@@ -25,6 +25,9 @@ int Status_Dec_Inc = ACCELERATION_N_A;
 static char skip_first_two_dat = 0;
 static float Vehicle_Speed_Prev;
 static float Relative_Speed_Prev;
+static float Vehicle_Speed_Prev_ms;
+static float Vehicle_Speed_Prev_Prev_ms;
+static float Relative_Speed_Prev_ms;
 static float Target_Veh_Accel;
 
 
@@ -60,17 +63,25 @@ static float SafetyDistance_AccMax;
 
 static void ACDS_Dtrmn_Acc_Target_Veh(void)
 {
+      float Vehicle_Speed_ms;
+
 	  if(skip_first_two_dat < 2)
 	  {
 		  skip_first_two_dat++;
 	  }
 	  else
 	  {
-		  Target_Veh_Accel = ((Vehicle_Speed - Vehicle_Speed_Prev) + (Relative_Speed_Prev - Relative_Speed))/TIMER_PARAM;
+		  Vehicle_Speed_ms = Vehicle_Speed / MS_TO_KMH;
+
+		  Target_Veh_Accel = ((Vehicle_Speed_Prev_ms - Vehicle_Speed_Prev_Prev_ms) + (Relative_Speed_Prev_ms - Relative_Speed_ms))/TIMER_PARAM;
 	  }
+	  Vehicle_Speed_Prev_Prev_ms = Vehicle_Speed_Prev_ms;
 
 	  Vehicle_Speed_Prev = Vehicle_Speed;
 	  Relative_Speed_Prev = Relative_Speed;
+	  Vehicle_Speed_Prev_ms = Vehicle_Speed_ms;
+	  Relative_Speed_Prev_ms = Relative_Speed_ms;
+
 
 }
 
@@ -93,7 +104,7 @@ static void Calc_Safety_Dist_CTH(void)
 	 * */
 	float th_CTH;
 
-	th_CTH = T_ZERO-(CONSTANT_1*Relative_Speed/MS_TO_KMH);
+	th_CTH = T_ZERO-(CONSTANT_1 * Relative_Speed_ms);
 
 	if(th_CTH > th_MAX)
 	{
@@ -122,7 +133,7 @@ static void Calc_Safety_Dist_VTH(void)
 
 	float th_VTH;
 
-	th_VTH = T_ZERO-(CONSTANT_1*Relative_Speed/MS_TO_KMH)-(CONSTANT_2*Target_Veh_Accel);
+	th_VTH = T_ZERO-(CONSTANT_1 * Relative_Speed_ms)-(CONSTANT_2 * Target_Veh_Accel);
 
 	if(th_VTH > th_MAX)
 	{
