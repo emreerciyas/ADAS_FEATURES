@@ -19,6 +19,7 @@ extern void Run_Test_with_Internal_Variable(void);
 
 extern float Relative_Distance;
 extern float Relative_Speed;
+extern float Relative_Speed_ms;
 extern float Speed_SetbyDriver;
 
 extern float Output_Acceleration;

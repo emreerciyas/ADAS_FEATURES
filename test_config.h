@@ -26,7 +26,8 @@ extern float Speed_SetbyDriver_Internal_Test;
 #define TEST_SCHENARIO_4 4
 #define TEST_SCHENARIO_5 5
 #define TEST_SCHENARIO_6 6
+#define TEST_SCHENARIO_7 7
 
-#define ACTIVE_TEST_SCHENARIO TEST_SCHENARIO_6
+#define ACTIVE_TEST_SCHENARIO TEST_SCHENARIO_7
 
 #endif /* TEST_CONFIG_H_ */
