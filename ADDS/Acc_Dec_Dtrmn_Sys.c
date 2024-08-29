@@ -18,8 +18,13 @@
 
 float Safety_Distance;
 float Output_Acceleration = 0.f;
+static float Output_Acceleration_Prev = 0.f;
 int Status_Accel_Decel = DEFAULT_CONTROL;
 int Status_Dec_Inc = ACCELERATION_N_A;
+int Status_Dec_Inc_Prev = ACCELERATION_N_A;
+int Acceleration_Regulator;
+int Acceleration_Regulator_Prev;
+int Accel_Reg_Array[ACCEL_REG_NUM_OF_TYPES] = {0};
 
 
 static char skip_first_two_dat = 0;
@@ -251,6 +256,7 @@ static void Dtrmn_AccelDecelandStatus(void)
 		Output_Acceleration= FULLBRAKE_MS2;
 		Status_Accel_Decel = EBS_FULL;
 		Status_Dec_Inc = ACCELERATION_DECREASED;
+		Acceleration_Regulator = 0;
 	}
 	else if( ((Relative_Speed > 0.f) && (TTC <= TTC_HalfFullBrake)) ||
 			 ((Relative_Speed <= 0.f) && (Relative_Distance <= SafetyDistance_HalfFullBrake )))
@@ -259,6 +265,7 @@ static void Dtrmn_AccelDecelandStatus(void)
 		Output_Acceleration= ((Vehicle_Speed/MS_TO_KMH) *( Vehicle_Speed/MS_TO_KMH))/(2*Relative_Distance);
 		Status_Accel_Decel = EBS_FULL;
 		Status_Dec_Inc = ACCELERATION_DECREASED;
+		Acceleration_Regulator = 0;
 	}
 	else if( ((Relative_Speed > 0.f) && (TTC <= TTC_HalfBrake)) ||
 			((Relative_Speed <= 0.f) && (Relative_Distance <= SafetyDistance_HalfBrake )))
@@ -267,6 +274,7 @@ static void Dtrmn_AccelDecelandStatus(void)
 		Output_Acceleration= ((Vehicle_Speed/MS_TO_KMH) *( Vehicle_Speed/MS_TO_KMH))/(2*Relative_Distance);
 		Status_Accel_Decel = EBS_HALF;
 		Status_Dec_Inc = ACCELERATION_DECREASED;
+		Acceleration_Regulator = 0;
 	}
 	else if( ((Relative_Speed > 0.f) && (TTC <= TTC_SafetyDistMin)) ||
 			((Relative_Speed <= 0.f) && (Relative_Distance <= Safety_Distance )))
@@ -275,6 +283,7 @@ static void Dtrmn_AccelDecelandStatus(void)
 		Output_Acceleration= ((Vehicle_Speed/MS_TO_KMH) *( Vehicle_Speed/MS_TO_KMH))/(2*Relative_Distance);
 		Status_Accel_Decel = FWC;
 		Status_Dec_Inc = ACCELERATION_DECREASED;
+		Acceleration_Regulator = 0;
 	}
 	else if( ((Relative_Speed > 0.f) && (TTC <= TTC_AccDisabled)) ||
 			((Relative_Speed <= 0.f) && (Relative_Distance <= SafetyDistance_AccDisabled )))
@@ -283,6 +292,7 @@ static void Dtrmn_AccelDecelandStatus(void)
 		Output_Acceleration= 0.f;
 		Status_Accel_Decel = DEFAULT_CONTROL;
 		Status_Dec_Inc = ACCELERATION_N_A;
+		Acceleration_Regulator = 1;
 	}
 	else if( ((Relative_Speed > 0.f) && (TTC <= TTC_AccMin)) ||
 			((Relative_Speed <= 0.f) && (Relative_Distance <= SafetyDistance_AccMin )))
@@ -295,6 +305,7 @@ static void Dtrmn_AccelDecelandStatus(void)
 		}
 		Status_Accel_Decel = ACC;
 		Status_Dec_Inc = ACCELERATION_DECREASED;
+		Acceleration_Regulator = 2;
 
 	}
 	else if( ((Relative_Speed > 0.f) && (TTC <= TTC_AccMax)) ||
@@ -354,6 +365,8 @@ static void Dtrmn_AccelDecelandStatus(void)
 			Status_Accel_Decel = ACC;
 			Status_Dec_Inc = ACCELERATION_N_A;
 		}
+
+		Acceleration_Regulator = 3;
 	}
 	else if( ((Relative_Speed > 0.f) && (TTC > TTC_AccMax)) ||
 			((Relative_Speed <= 0.f) && (Relative_Distance > SafetyDistance_AccMax )))
@@ -395,11 +408,129 @@ static void Dtrmn_AccelDecelandStatus(void)
 			Status_Accel_Decel = CC;
 			Status_Dec_Inc = ACCELERATION_N_A;
 		}
+
+		Acceleration_Regulator = 4;
 	}
 	else
 	{
 			/*do nothing*/
 	}
+
+}
+
+
+
+void Acceleration_Regulator_Check(void)
+{
+	float out_accel;
+	float out_accel_prev;
+	float out_accel_new;
+
+	if (Acceleration_Regulator != Acceleration_Regulator_Prev)
+	{
+
+		/*if type is change then, clear the array*/
+		for(int i =0; i< ACCEL_REG_NUM_OF_TYPES; i++)
+		{
+			Accel_Reg_Array[i] = 0;
+		}
+
+		/* Increase 1 to new Acceleration type counter*/
+		Accel_Reg_Array[Acceleration_Regulator] =+1;
+
+		if(Status_Dec_Inc == ACCELERATION_DECREASED)
+		{
+			out_accel = Output_Acceleration * -1.f;
+		}
+		else
+		{
+			out_accel = Output_Acceleration;
+		}
+
+		if(Status_Dec_Inc_Prev == ACCELERATION_DECREASED)
+		{
+			out_accel_prev = Output_Acceleration_Prev * -1.f;
+		}
+		else
+		{
+			out_accel_prev = Output_Acceleration_Prev;
+		}
+
+		out_accel_new = (out_accel * ACCEL_REG_COEFFICIENT) + (out_accel_prev * (1-ACCEL_REG_COEFFICIENT)) ;
+
+		if(out_accel_new < 0.f)
+		{
+			Output_Acceleration = out_accel_new * -1.f;
+			Status_Dec_Inc = ACCELERATION_DECREASED;
+
+		}
+		else if(out_accel_new == 0.f)
+		{
+			Output_Acceleration = out_accel_new;
+			Status_Dec_Inc = ACCELERATION_N_A;
+		}
+		else
+		{
+			Output_Acceleration = out_accel_new;
+			Status_Dec_Inc = ACCELERATION_INCREASED;
+		}
+
+	}
+	else
+	{
+		if(Accel_Reg_Array[Acceleration_Regulator] < ACCEL_REG_TYPE_ACCEPT)
+		{
+			/* Increase 1 to new Acceleration type counter*/
+			Accel_Reg_Array[Acceleration_Regulator] =+1;
+
+			if(Status_Dec_Inc == ACCELERATION_DECREASED)
+			{
+				out_accel = Output_Acceleration * -1.f;
+			}
+			else
+			{
+				out_accel = Output_Acceleration;
+			}
+
+			if(Status_Dec_Inc_Prev == ACCELERATION_DECREASED)
+			{
+				out_accel_prev = Output_Acceleration_Prev * -1.f;
+			}
+			else
+			{
+				out_accel_prev = Output_Acceleration_Prev;
+			}
+
+			out_accel_new = (out_accel * ACCEL_REG_COEFFICIENT) + (out_accel_prev * (1-ACCEL_REG_COEFFICIENT)) ;
+
+			if(out_accel_new < 0.f)
+			{
+				Output_Acceleration = out_accel_new * -1.f;
+				Status_Dec_Inc = ACCELERATION_DECREASED;
+
+			}
+			else if(out_accel_new == 0.f)
+			{
+				Output_Acceleration = out_accel_new;
+				Status_Dec_Inc = ACCELERATION_N_A;
+			}
+			else
+			{
+				Output_Acceleration = out_accel_new;
+				Status_Dec_Inc = ACCELERATION_INCREASED;
+			}
+		}
+		else
+		{
+			/*do nothing*/
+		}
+	}
+
+
+	Output_Acceleration_Prev = Output_Acceleration;
+	Status_Dec_Inc_Prev = Status_Dec_Inc;
+	Acceleration_Regulator_Prev = Acceleration_Regulator;
+
 
 }
 
@@ -502,6 +633,7 @@ void Acc_Dec_Dtrmn_Sys(void)
 		Calc_AllTTCs();
 
 		Dtrmn_AccelDecelandStatus();
+		Acceleration_Regulator_Check();
 		Check_Enable_of_SubFeatures();
 
 	}

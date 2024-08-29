@@ -324,6 +324,76 @@ static void Test_Schenario_6(void)
 #endif
 
 
+#if ACTIVE_TEST_SCHENARIO == TEST_SCHENARIO_7
+
+static void Test_Schenario_7(void)
+{
+	static float target_vehicle_speed = 60;
+	static unsigned int decreases_contiune = 1;
+	if(initial_settings == 1)
+	{
+		Vehicle_Speed_Internal_Test = 70;
+		Speed_SetbyDriver_Internal_Test = 90;
+		Relative_Distance_Internal_Test = 50;
+		CC_Enable_Internal_Test = 1;
+		ACC_Enable_Internal_Test = 1;
+		CWAS_Enable_Internal_Test = 1;
+		EBS_Enable_Internal_Test = 1;
+		initial_settings = 0;
+	}
+	else
+	{
+		Relative_Distance_Internal_Test -= (((Vehicle_Speed_Internal_Test - target_vehicle_speed)*TIMER_PARAM)/(MS_TO_KMH));
+
+		if(Relative_Distance_Internal_Test > 300.f)
+		{
+			Relative_Distance_Internal_Test = 300.f;
+		}
+
+		if(Status_Dec_Inc == ACCELERATION_DECREASED)
+		{
+			Vehicle_Speed_Internal_Test -= (Output_Acceleration*TIMER_PARAM * MS_TO_KMH);
+		}
+		else if(Status_Dec_Inc == ACCELERATION_INCREASED)
+		{
+			Vehicle_Speed_Internal_Test += (Output_Acceleration*TIMER_PARAM * MS_TO_KMH);
+		}
+		else
+		{
+			/* do nothing */
+		}
+
+
+		if(decreases_contiune == 1)
+		{
+			if(target_vehicle_speed >= 5)
+			{
+				target_vehicle_speed -= (ACC_ACCEL_MAX *TIMER_PARAM * MS_TO_KMH);
+			}
+			else
+			{
+				decreases_contiune = 0;
+			}
+		}
+		else
+		{
+			if(target_vehicle_speed < 100)
+			{
+				target_vehicle_speed += (ACC_ACCEL_MAX *TIMER_PARAM * MS_TO_KMH);
+			}
+			else
+			{
+				target_vehicle_speed = 100;
+			}
+		}
+
+	}
+
+}
+
+#endif
+
+
 void Run_Test_with_Internal_Variable(void)
 {
 #if ACTIVE_TEST_SCHENARIO == TEST_SCHENARIO_1
@@ -349,6 +419,10 @@ void Run_Test_with_Internal_Variable(void)
 
 #if ACTIVE_TEST_SCHENARIO == TEST_SCHENARIO_6
 	Test_Schenario_6();
+#endif
+
+#if ACTIVE_TEST_SCHENARIO == TEST_SCHENARIO_7
+	Test_Schenario_7();
 #endif
 
 }
